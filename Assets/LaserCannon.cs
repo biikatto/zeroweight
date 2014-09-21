@@ -8,6 +8,7 @@ public class LaserCannon : MonoBehaviour {
 	public float laserTime = 0.5f;
 	float laserCountdown;
 	float cooldown;
+	bool checkForHit;
 
 	GameObject[] activeBeams;
 	float activeTime;
@@ -28,10 +29,23 @@ public class LaserCannon : MonoBehaviour {
 		activeBeams[1].transform.parent = transform;
 		activeTime += laserTime;
 		cooldown += cooldownTime;
+
+		checkForHit = true;
 	}
 
 	void ManageTimers(){
 		if(activeTime > 0){
+			// Hit detection
+			if(checkForHit){
+				int layerMask = 1 << 8; // Select 8th layer (Targets)
+				if(Physics.Raycast(transform.position,
+ 					    	transform.TransformDirection(Vector3.forward),
+							Mathf.Infinity,
+							layerMask) ){
+					Debug.Log("Hit!");
+					checkForHit = false;
+				}
+			}
 			if(activeTime - Time.deltaTime <= 0){
 				for(int i=0;i<activeBeams.Length;i++){
 					Destroy(activeBeams[i]);
@@ -47,6 +61,10 @@ public class LaserCannon : MonoBehaviour {
 		}
 		if(cooldown < 0){
 			cooldown = 0;
+		}
+		if(checkForHit & (activeTime == 0)){
+			Debug.Log("Miss");
+			checkForHit = false;
 		}
 	}
 	
