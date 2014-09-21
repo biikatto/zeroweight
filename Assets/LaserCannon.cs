@@ -5,7 +5,7 @@ public class LaserCannon : MonoBehaviour {
 
 	public GameObject laserBeam;
 	public float cooldownTime = 2f;
-	float laserTime = 0.5f;
+	public float laserTime = 0.5f;
 	float laserCountdown;
 	float cooldown;
 
@@ -20,7 +20,9 @@ public class LaserCannon : MonoBehaviour {
 		activeBeams[0] = Instantiate(laserBeam, transform.position, transform.rotation) as GameObject;
 		activeBeams[1] = Instantiate(laserBeam, transform.position, transform.rotation) as GameObject;
 		activeBeams[0].transform.Translate(Vector3.left * 0.8f);
+		activeBeams[0].transform.Translate(Vector3.forward * 50f);
 		activeBeams[1].transform.Translate(Vector3.right * 0.8f);
+		activeBeams[1].transform.Translate(Vector3.forward * 50f);
 
 		activeBeams[0].transform.parent = transform;
 		activeBeams[1].transform.parent = transform;
