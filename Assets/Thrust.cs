@@ -12,6 +12,7 @@ public class Thrust : MonoBehaviour {
 
 	float thrustPower = 1f;
 	float xThrustPower = 100f;
+	float yThrustPower = 100f;
 	float zThrustPower = 100f;
 
 	float disruptTime = 0f;
@@ -39,9 +40,11 @@ public class Thrust : MonoBehaviour {
 	void FixedUpdate(){
 		adjustThrust(Input.GetAxis("Mouse ScrollWheel"));
 		float xThrust = Input.GetAxis("X thrust");
+		float yThrust = Input.GetAxis("Y thrust");
 		float zThrust = Input.GetAxis("Z thrust");
 		if(disruptTime == 0f){
 			rigidbody.AddRelativeForce(Vector3.right * xThrust * xThrustPower * thrustPower * Time.deltaTime);
+			rigidbody.AddRelativeForce(Vector3.up * yThrust * yThrustPower * thrustPower * Time.deltaTime);
 			rigidbody.AddRelativeForce(Vector3.forward * zThrust * zThrustPower * thrustPower * Time.deltaTime);
 		}else{
 			disruptTime -= Time.deltaTime;
