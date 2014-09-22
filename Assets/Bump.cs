@@ -2,8 +2,6 @@ using UnityEngine;
 using System.Collections;
 
 public class Bump : MonoBehaviour {
-	public float bumpForce = 5f;
-
 	Thrust thrust;
 
 	void Start(){
@@ -17,6 +15,7 @@ public class Bump : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision collision){
+		float bumpForce = 1f;
 		foreach(ContactPoint contact in collision.contacts){
 			Debug.DrawRay(contact.point, contact.normal, Color.white);
 			rigidbody.AddForce(contact.normal * bumpForce * -1f);
