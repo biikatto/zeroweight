@@ -38,11 +38,14 @@ public class LaserCannon : MonoBehaviour {
 			// Hit detection
 			if(checkForHit){
 				int layerMask = 1 << 8; // Select 8th layer (Targets)
+				RaycastHit hit;
 				if(Physics.Raycast(transform.position,
  					    	transform.TransformDirection(Vector3.forward),
+							out hit,
 							Mathf.Infinity,
-							layerMask) ){
-					Debug.Log("Hit!");
+							layerMask)){
+					Debug.Log(hit.transform.parent.name);
+					hit.transform.parent.SendMessage("destroy", hit.point);
 					checkForHit = false;
 				}
 			}
