@@ -51,9 +51,12 @@
      <Compile Include="Assets\Damage.cs" />
      <Compile Include="Assets\Destruction.cs" />
      <Compile Include="Assets\LaserCannon.cs" />
+     <Compile Include="Assets\PlayerControl.cs" />
      <Compile Include="Assets\SimpleSmoothMouseLook.cs" />
      <Compile Include="Assets\Steer.cs" />
+     <Compile Include="Assets\Target.cs" />
      <Compile Include="Assets\Thrust.cs" />
+     <Compile Include="Assets\Weapon.cs" />
      <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
  <Reference Include="Assembly-UnityScript-firstpass">
  <HintPath>/Users/portocat/zeroweight/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
