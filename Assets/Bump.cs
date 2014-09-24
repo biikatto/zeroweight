@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Bump : MonoBehaviour {
 	Thrust thrust;
+	public float disruptTime = 0.15f;
 
 	void Start(){
 		thrust = GetComponent<Thrust>();
@@ -20,6 +21,6 @@ public class Bump : MonoBehaviour {
 			Debug.DrawRay(contact.point, contact.normal, Color.white);
 			rigidbody.AddForce(contact.normal * bumpForce * -1f);
 		}
-		thrust.disrupt(0.5f);
+		thrust.disrupt(disruptTime);
 	}
 }
