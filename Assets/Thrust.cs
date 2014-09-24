@@ -15,6 +15,10 @@ public class Thrust : MonoBehaviour {
 	float yThrustPower = 100f;
 	float zThrustPower = 100f;
 
+	float xThrust = 0f;
+	float yThrust = 0f;
+	float zThrust = 0f;
+
 	float disruptTime = 0f;
 
 	private Vector3 velocity;
@@ -37,11 +41,20 @@ public class Thrust : MonoBehaviour {
 		}
 	}
 
+	void XThrust(float thrust){
+		xThrust = thrust;
+	}
+
+	void YThrust(float thrust){
+		yThrust = thrust;
+	}
+
+	void ZThrust(float thrust){
+		zThrust = thrust;
+	}
+
 	void FixedUpdate(){
 		adjustThrust(Input.GetAxis("Mouse ScrollWheel"));
-		float xThrust = Input.GetAxis("X thrust");
-		float yThrust = Input.GetAxis("Y thrust");
-		float zThrust = Input.GetAxis("Z thrust");
 		if(disruptTime == 0f){
 			rigidbody.AddRelativeForce(Vector3.right * xThrust * xThrustPower * thrustPower * Time.deltaTime);
 			rigidbody.AddRelativeForce(Vector3.up * yThrust * yThrustPower * thrustPower * Time.deltaTime);
