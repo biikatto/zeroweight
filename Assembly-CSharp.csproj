@@ -48,9 +48,6 @@
   <ItemGroup>
      <Compile Include="Assets\Bump.cs" />
      <Compile Include="Assets\CameraMove.cs" />
-     <Compile Include="Assets\Damage.cs" />
-     <Compile Include="Assets\Destruction.cs" />
-     <Compile Include="Assets\LaserCannon.cs" />
      <Compile Include="Assets\PlayerControl.cs" />
      <Compile Include="Assets\SimpleSmoothMouseLook.cs" />
      <Compile Include="Assets\Steer.cs" />
