@@ -3,19 +3,23 @@ using System.Collections;
 
 public class CameraMove : MonoBehaviour {
 	bool firstPerson = true;
-	public float cameraDistance = 10;
+	public Vector3 thirdPersonPosition = new Vector3(-5, 5, -30);
+	public Vector3 thirdPersonRotation = new Vector3(8, 8, 0);
 
 	void Setup(){
 	}
 
 	void Update(){
 		if(Input.GetButtonDown("Camera select")){
-			//Debug.Log("Camera move down");
 			if(firstPerson){
-				transform.Translate(Vector3.back * cameraDistance);
+				transform.Translate(thirdPersonPosition);
+				transform.Rotate(Vector3.up, thirdPersonRotation.x);
+				transform.Rotate(Vector3.right, thirdPersonRotation.y);
 				firstPerson = false;
 			}else{
-				transform.Translate(Vector3.forward * cameraDistance);
+				transform.Rotate(Vector3.left, thirdPersonRotation.y);
+				transform.Rotate(Vector3.down, thirdPersonRotation.x);
+				transform.Translate(-1 * thirdPersonPosition);
 				firstPerson = true;
 			}
 		}
