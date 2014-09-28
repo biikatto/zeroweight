@@ -13,12 +13,28 @@ public class PlayerControl : MonoBehaviour
     public Vector2 smoothing = new Vector2(8, 8);
     public float rollSensitivity = 10f;
     public float rollSmoothing = 1f;
+
+    GameObject leftWeapon;
+    GameObject rightWeapon;
  
-    void Start(){}
+    void Start(){
+    	Transform[] allChildren = gameObject.GetComponentsInChildren<Transform>();
+    	foreach(Transform child in allChildren){
+    		Debug.Log(child.gameObject.name);
+    		if(child.gameObject.name == "Left laser"){
+    			leftWeapon = child.gameObject;
+    		}else if(child.gameObject.name == "Right laser"){
+    			rightWeapon = child.gameObject;
+    		}
+    	}
+    }
  
     void FixedUpdate(){
-		if(Input.GetButton("Fire")){
-			transform.SendMessage("Fire");
+		if(Input.GetButton("Fire left")){
+			leftWeapon.BroadcastMessage("Fire");
+		}
+		if(Input.GetButton("Fire right")){
+			rightWeapon.BroadcastMessage("Fire");
 		}
     	// Send thrust messages
 		transform.SendMessage("XThrust", Input.GetAxis("X thrust"));
