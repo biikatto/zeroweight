@@ -14,6 +14,8 @@ public class Weapon : MonoBehaviour {
 	bool checkForHit;
 
 	GameObject[] activeBeams;
+	public bool debug = true;
+
 	float activeTime;
 
 	void Start(){
@@ -55,7 +57,9 @@ public class Weapon : MonoBehaviour {
 					}else{
 						target = hit.transform;
 					}
-					Debug.Log("Hit");
+					if(debug){
+						Debug.Log("Hit");
+					}
 					target.SendMessage("AddDamage", weaponDamage);
 					checkForHit = false;
 				}
@@ -77,7 +81,9 @@ public class Weapon : MonoBehaviour {
 			cooldown = 0;
 		}
 		if(checkForHit & (activeTime == 0)){
-			Debug.Log("Miss");
+			if(debug){
+				Debug.Log("Miss");
+			}
 			checkForHit = false;
 		}
 	}
