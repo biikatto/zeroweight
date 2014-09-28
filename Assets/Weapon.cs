@@ -17,8 +17,12 @@ public class Weapon : MonoBehaviour {
 
 	GameObject activeBeam;
 	float activeTime;
+	float beamLength;
 
 	void Start(){
+		activeBeam = Instantiate(weaponBeam, transform.position, transform.rotation) as GameObject;
+		beamLength = activeBeam.renderer.bounds.size.z;
+		Destroy(activeBeam);
 	}
 
 	void Fire(){
