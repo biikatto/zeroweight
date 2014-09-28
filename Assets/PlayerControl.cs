@@ -36,10 +36,10 @@ public class PlayerControl : MonoBehaviour
 		if(Input.GetButton("Fire right")){
 			rightWeapon.BroadcastMessage("Fire");
 		}
-    	// Send thrust messages
-		transform.SendMessage("XThrust", Input.GetAxis("X thrust"));
-		transform.SendMessage("YThrust", Input.GetAxis("Y thrust"));
-		transform.SendMessage("ZThrust", Input.GetAxis("Z thrust"));
+    	// Broadcast thrust messages
+		transform.BroadcastMessage("XThrust", Input.GetAxis("X thrust"));
+		transform.BroadcastMessage("YThrust", Input.GetAxis("Y thrust"));
+		transform.BroadcastMessage("ZThrust", Input.GetAxis("Z thrust"));
 
         // Ensure the cursor is always locked when set
         Screen.lockCursor = lockCursor;
