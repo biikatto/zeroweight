@@ -13,26 +13,21 @@ public class Weapon : MonoBehaviour {
 	float cooldown;
 	bool checkForHit;
 
-	GameObject[] activeBeams;
 	public bool debug = true;
 
+	GameObject activeBeam;
 	float activeTime;
 
 	void Start(){
-		activeBeams = new GameObject[2];
 	}
 
 	void Fire(){
 		if(cooldown == 0){
-			activeBeams[0] = Instantiate(weaponBeam, transform.position, transform.rotation) as GameObject;
-			activeBeams[1] = Instantiate(weaponBeam, transform.position, transform.rotation) as GameObject;
-			activeBeams[0].transform.Translate(Vector3.left * mountWidth * 0.5f);
-			activeBeams[0].transform.Translate(Vector3.forward * 50f);
-			activeBeams[1].transform.Translate(Vector3.right * mountWidth * 0.5f);
-			activeBeams[1].transform.Translate(Vector3.forward * 50f);
+			activeBeam = Instantiate(weaponBeam, transform.position, transform.rotation) as GameObject;
+			activeBeam.transform.Translate(
+					Vector3.forward * 0.5f * beamLength);
+			activeBeam.transform.parent = transform;
 
-			activeBeams[0].transform.parent = transform;
-			activeBeams[1].transform.parent = transform;
 			activeTime += weaponTime;
 			cooldown += cooldownTime;
 
@@ -65,9 +60,7 @@ public class Weapon : MonoBehaviour {
 				}
 			}
 			if(activeTime - Time.deltaTime <= 0){
-				for(int i=0;i<activeBeams.Length;i++){
-					Destroy(activeBeams[i]);
-				}
+				Destroy(activeBeam);
 			}
 			activeTime -= Time.deltaTime;
 		}
