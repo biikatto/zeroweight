@@ -19,7 +19,7 @@ public class Target : MonoBehaviour{
 		childRotations = new Quaternion[transform.childCount];
 		for(int i=0;i<transform.childCount;i++){
 			Transform child = transform.GetChild(i);
-			child.rigidbody.isKinematic = true;
+			//child.rigidbody.isKinematic = true;
 			childPositions[i] = child.transform.position;
 			childRotations[i] = child.transform.rotation;
 		}
@@ -36,7 +36,7 @@ public class Target : MonoBehaviour{
 	public void Explode(Vector3 explosionPos){
 		if(!destroyed){
 			foreach(Transform child in transform){
-				child.rigidbody.isKinematic = false;
+				//child.rigidbody.isKinematic = false;
 				child.rigidbody.AddExplosionForce(
 						explosionForce,
 						explosionPos,
@@ -47,13 +47,14 @@ public class Target : MonoBehaviour{
 
 	public void Explode(){
 		Explode(transform.position);
+		destroyed = true;
 	}
 
 	void Reset(){
 		hp = maxHitPoints;
 		for(int i=0;i<transform.childCount;i++){
 			Transform child = transform.GetChild(i);
-			child.rigidbody.isKinematic = true;
+			//child.rigidbody.isKinematic = true;
 			child.position = childPositions[i];
 			child.rotation = childRotations[i];
 		}
