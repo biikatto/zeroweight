@@ -46,15 +46,15 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Bump.cs" />
-     <Compile Include="Assets\CameraMove.cs" />
-     <Compile Include="Assets\PlayerControl.cs" />
-     <Compile Include="Assets\PlayerGUI.cs" />
-     <Compile Include="Assets\SimpleSmoothMouseLook.cs" />
-     <Compile Include="Assets\Steer.cs" />
-     <Compile Include="Assets\Target.cs" />
-     <Compile Include="Assets\Thrust.cs" />
-     <Compile Include="Assets\Weapon.cs" />
+     <Compile Include="Assets\Scripts\Bump.cs" />
+     <Compile Include="Assets\Scripts\CameraMove.cs" />
+     <Compile Include="Assets\Scripts\PlayerControl.cs" />
+     <Compile Include="Assets\Scripts\PlayerGUI.cs" />
+     <Compile Include="Assets\Scripts\SimpleSmoothMouseLook.cs" />
+     <Compile Include="Assets\Scripts\Steer.cs" />
+     <Compile Include="Assets\Scripts\Target.cs" />
+     <Compile Include="Assets\Scripts\Thrust.cs" />
+     <Compile Include="Assets\Scripts\Weapon.cs" />
      <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
   </ItemGroup>
   <ItemGroup>
