@@ -49,6 +49,7 @@
      <Compile Include="Assets\Bump.cs" />
      <Compile Include="Assets\CameraMove.cs" />
      <Compile Include="Assets\PlayerControl.cs" />
+     <Compile Include="Assets\PlayerGUI.cs" />
      <Compile Include="Assets\SimpleSmoothMouseLook.cs" />
      <Compile Include="Assets\Steer.cs" />
      <Compile Include="Assets\Target.cs" />
