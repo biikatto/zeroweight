@@ -14,6 +14,8 @@ public class PlayerControl : MonoBehaviour
     public float rollSensitivity = 10f;
     public float rollSmoothing = 1f;
 
+    bool firstPerson = true;
+
     GameObject leftWeapon;
     GameObject rightWeapon;
  
@@ -35,6 +37,15 @@ public class PlayerControl : MonoBehaviour
 		}
 		if(Input.GetButton("Fire right")){
 			rightWeapon.BroadcastMessage("Fire");
+		}
+		if(Input.GetButtonDown("Camera select")){
+			if(firstPerson){
+				gameObject.BroadcastMessage("ThirdPerson");
+				firstPerson = false;
+			}else{
+				gameObject.BroadcastMessage("FirstPerson");
+				firstPerson = true;
+			}
 		}
     	// Broadcast thrust messages
 		transform.BroadcastMessage("XThrust", Input.GetAxis("X thrust"));
