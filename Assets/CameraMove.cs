@@ -9,19 +9,17 @@ public class CameraMove : MonoBehaviour {
 	void Setup(){
 	}
 
-	void Update(){
-		if(Input.GetButtonDown("Camera select")){
-			if(firstPerson){
-				transform.Translate(thirdPersonPosition);
-				transform.Rotate(Vector3.up, thirdPersonRotation.x);
-				transform.Rotate(Vector3.right, thirdPersonRotation.y);
-				firstPerson = false;
-			}else{
-				transform.Rotate(Vector3.left, thirdPersonRotation.y);
-				transform.Rotate(Vector3.down, thirdPersonRotation.x);
-				transform.Translate(-1 * thirdPersonPosition);
-				firstPerson = true;
-			}
-		}
+	void FirstPerson(){
+		transform.Rotate(Vector3.left, thirdPersonRotation.y);
+		transform.Rotate(Vector3.down, thirdPersonRotation.x);
+		transform.Translate(-1 * thirdPersonPosition);
+		firstPerson = true;
+	}
+
+	void ThirdPerson(){
+		transform.Translate(thirdPersonPosition);
+		transform.Rotate(Vector3.up, thirdPersonRotation.x);
+		transform.Rotate(Vector3.right, thirdPersonRotation.y);
+		firstPerson = false;
 	}
 }
