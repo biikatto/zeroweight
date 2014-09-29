@@ -57,7 +57,7 @@ public class Weapon : MonoBehaviour {
 					if(debug){
 						Debug.Log("Hit");
 					}
-					target.SendMessage("AddDamage", weaponDamage);
+					target.BroadcastMessage("AddDamage", weaponDamage);
 					checkForHit = false;
 				}
 			}
