@@ -40,6 +40,7 @@ public class Weapon : MonoBehaviour {
 	}
 
 	void ManageTimers(){
+		// if weapon is active
 		if(activeTime > 0){
 			// Hit detection
 			if(checkForHit){
