@@ -22,7 +22,6 @@ public class PlayerControl : MonoBehaviour
     void Start(){
     	Transform[] allChildren = gameObject.GetComponentsInChildren<Transform>();
     	foreach(Transform child in allChildren){
-    		Debug.Log(child.gameObject.name);
     		if(child.gameObject.name == "Left laser"){
     			leftWeapon = child.gameObject;
     		}else if(child.gameObject.name == "Right laser"){
