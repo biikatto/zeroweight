@@ -9,6 +9,7 @@ public class Weapon : MonoBehaviour {
 	public float weaponDamage = 40f;
 	public float kineticForce = 10f;
 	public float mountWidth = 1f;
+	public float range = Mathf.Infinity;
 	float weaponCountdown;
 	float cooldown;
 	bool checkForHit;
@@ -19,17 +20,13 @@ public class Weapon : MonoBehaviour {
 	float activeTime;
 	float beamLength;
 
-	void Start(){
-		activeBeam = Instantiate(weaponBeam, transform.position, transform.rotation) as GameObject;
-		beamLength = activeBeam.renderer.bounds.size.z;
-		Destroy(activeBeam);
-	}
+	void Start(){}
 
 	void Fire(){
 		if(cooldown == 0){
 			activeBeam = Instantiate(weaponBeam, transform.position, transform.rotation) as GameObject;
-			activeBeam.transform.Translate(
-					Vector3.forward * 0.5f * beamLength);
+			activeBeam.transform.localScale = new Vector3(1f, 1f, range);
+			activeBeam.transform.Translate(Vector3.forward * 0.5f * range);
 			activeBeam.transform.parent = transform;
 
 			activeTime += weaponTime;
@@ -49,7 +46,7 @@ public class Weapon : MonoBehaviour {
 				if(Physics.Raycast(transform.position,
  					    	transform.TransformDirection(Vector3.forward),
 							out hit,
-							Mathf.Infinity,
+							range,
 							layerMask)){
 					Transform target;
 					if(hit.transform.parent != null){
