@@ -4,22 +4,32 @@ using System.Collections;
 public class Thrust : MonoBehaviour {
 
 	public float maxThrust = 200f;
-
 	public float throttleSensitivity = 100f;
 
+	// Boost
 	public AnimationCurve boostCurve;
-	private Keyframe[] ks;
 
-	float thrustPower = 1f;
-	float xThrustPower = 100f;
-	float yThrustPower = 100f;
-	float zThrustPower = 100f;
+	// Public maxima
+	public float boostLength = 1.5f;
+	public float boostCooldownLength = 0.5f;
+	public float boostThrust = 20f;
 
-	float xThrust = 0f;
-	float yThrust = 0f;
-	float zThrust = 0f;
+	// Private instantaneous values
+	private bool boosting = false;
+	private float boostTime = 0f;
+	private float boostCooldown = 0f;
+	private float boostPower = 0f;
 
-	float disruptTime = 0f;
+	private float thrustPower = 1f;
+	private float xThrustPower = 100f;
+	private float yThrustPower = 100f;
+	private float zThrustPower = 100f;
+
+	private float xThrust = 0f;
+	private float yThrust = 0f;
+	private float zThrust = 0f;
+
+	private float disruptTime = 0f;
 
 	private Vector3 velocity;
 
@@ -53,16 +63,46 @@ public class Thrust : MonoBehaviour {
 		zThrust = thrust;
 	}
 
+	void Boost(){
+		if(!boosting){
+			if(boostCooldown <= 0){
+				Debug.Log("Boost begin");
+				boosting = true;
+				boostTime = 0f;
+			}else{
+				Debug.Log("Boost cooldown not finished.");
+			}
+		}else{
+			Debug.Log("Still boosting.");
+		}
+	}
+
+	private void manageBoost(){
+		if(boosting){
+			boostPower = boostCurve.Evaluate(boostTime/boostLength);
+			boostTime += Time.deltaTime;
+			if(boostTime >= boostLength){
+				boosting = false;
+				boostTime = 0f;
+				boostCooldown = boostCooldownLength;
+				Debug.Log("Boost end");
+			}
+		}else if(boostCooldown > 0f){
+			boostCooldown -= Time.deltaTime;
+		}
+	}
+
 	void FixedUpdate(){
 		adjustThrust(Input.GetAxis("Mouse ScrollWheel"));
-		if(disruptTime == 0f){
-			rigidbody.AddRelativeForce(Vector3.right * xThrust * xThrustPower * thrustPower * Time.deltaTime);
-			rigidbody.AddRelativeForce(Vector3.up * yThrust * yThrustPower * thrustPower * Time.deltaTime);
-			rigidbody.AddRelativeForce(Vector3.forward * zThrust * zThrustPower * thrustPower * Time.deltaTime);
+		manageBoost();
+		if(disruptTime <= 0f){
+			rigidbody.AddRelativeForce(Vector3.right * (xThrust * xThrustPower * thrustPower * (1f + boostPower * boostThrust)) * Time.deltaTime);
+			rigidbody.AddRelativeForce(Vector3.up * (yThrust * yThrustPower * thrustPower * (1f + boostPower * boostThrust)) * Time.deltaTime);
+			rigidbody.AddRelativeForce(Vector3.forward * (zThrust * zThrustPower * thrustPower * (1f + boostPower * boostThrust)) * Time.deltaTime);
 		}else{
 			disruptTime -= Time.deltaTime;
-			if(disruptTime < 0){
-				disruptTime = 0;
+			if(disruptTime < 0f){
+				disruptTime = 0f;
 			}
 		}
 	}

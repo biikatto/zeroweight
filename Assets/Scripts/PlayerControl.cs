@@ -46,6 +46,11 @@ public class PlayerControl : MonoBehaviour
 				firstPerson = true;
 			}
 		}
+
+		if(Input.GetButtonDown("Boost")){
+			transform.BroadcastMessage("Boost");
+		}
+
     	// Broadcast thrust messages
 		transform.BroadcastMessage("XThrust", Input.GetAxis("X thrust"));
 		transform.BroadcastMessage("YThrust", Input.GetAxis("Y thrust"));
