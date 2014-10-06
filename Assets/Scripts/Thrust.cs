@@ -12,7 +12,7 @@ public class Thrust : MonoBehaviour {
 	// Public maxima
 	public float boostLength = 1.5f;
 	public float boostCooldownLength = 0.5f;
-	public float boostThrust = 20f;
+	public float boostThrust = 2.5f;
 
 	// Private instantaneous values
 	private bool boosting = false;
