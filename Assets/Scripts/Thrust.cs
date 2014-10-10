@@ -80,6 +80,7 @@ public class Thrust : MonoBehaviour {
 	private void manageBoost(){
 		if(boosting){
 			boostPower = boostCurve.Evaluate(boostTime/boostLength);
+			transform.BroadcastMessage("boostEnergy", 1f-boostPower);
 			boostTime += Time.deltaTime;
 			if(boostTime >= boostLength){
 				boosting = false;
@@ -106,6 +107,7 @@ public class Thrust : MonoBehaviour {
 			}
 		}
 	}
+
 
 	public void disrupt(float time){
 		disruptTime += time;

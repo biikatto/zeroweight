@@ -18,6 +18,7 @@ public class PlayerGUI : MonoBehaviour{
 	public Vector2 boostBarSize = new Vector2(20, 60);
 	public Color32 boostBarColor = new Color32(78, 187, 255, 100);
 	private Rect boostBarRect;
+	private int boostBarHeight;
 
 	private Rect playerScreen;
 	private Vector2 midScreen;
@@ -74,6 +75,7 @@ public class PlayerGUI : MonoBehaviour{
 	}
 
 	void drawBoostBar(){
+		boostBarRect.height = 10; //_boostEnergy * boostBarSize.y;
 		GUI.skin = skin;
 		GUI.color = boostBarColor; 
 		GUI.Box(boostBarRect, "");
