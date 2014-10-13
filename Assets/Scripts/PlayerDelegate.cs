@@ -17,8 +17,6 @@ public class PlayerDelegate : MonoBehaviour{
 		playerGUI = gameObject.GetComponentInChildren<PlayerGUI>();	
 		playerHealth = gameObject.GetComponentInChildren<PlayerHealth>();	
 		thrust = gameObject.GetComponentInChildren<Thrust>();
-		cameraMove = gameObject.GetComponentInChildren<CameraMove>();
-		steer = gameObject.GetComponentInChildren<Steer>();
 
     	foreach(Weapon weapon in gameObject.GetComponentsInChildren<Weapon>()){
     		if(weapon.gameObject.name == "Left laser"){
@@ -54,7 +52,6 @@ public class PlayerDelegate : MonoBehaviour{
 	}
 
 	public void Destruct(){
-		steer.Destruct();
 		playerControl.Destruct();
 		thrust.Destruct();
 		leftWeapon.Destruct();

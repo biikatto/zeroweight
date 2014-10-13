@@ -41,6 +41,9 @@ public class Thrust : MonoBehaviour {
 										new Keyframe(1.0f, 0f));
 	}
 
+	public void Destruct(){
+	}
+
 	void adjustThrust(float adjustment){
 		thrustPower += adjustment * throttleSensitivity;
 		if(thrustPower > maxThrust){
@@ -63,7 +66,7 @@ public class Thrust : MonoBehaviour {
 		zThrust = thrust;
 	}
 
-	void Boost(){
+	public void Boost(){
 		if(!boosting){
 			if(boostCooldown <= 0){
 				Debug.Log("Boost begin");
