@@ -6,11 +6,11 @@ public class PlayerDelegate : MonoBehaviour{
 	PlayerGUI playerGUI;
 	PlayerHealth playerHealth;
 	Thrust thrust;
-	CameraMove cameraMove;
-	Steer steer;
 
 	Weapon leftWeapon;
 	Weapon rightWeapon;
+
+	private bool destroyed = false;
 
 	void Start(){
 		playerControl = gameObject.GetComponentInChildren<PlayerControl>();	
@@ -41,11 +41,23 @@ public class PlayerDelegate : MonoBehaviour{
 		thrust.ZThrust(amount);
 	}
 
+	public void Boost(){
+		thrust.Boost();
+	}
+
 	public void FireLeftWeapon(){
 		leftWeapon.Fire();
 	}
 
 	public void FireRightWeapon(){
 		rightWeapon.Fire();
+	}
+
+	public void Destruct(){
+		steer.Destruct();
+		playerControl.Destruct();
+		thrust.Destruct();
+		leftWeapon.Destruct();
+		rightWeapon.Destruct();
 	}
 }

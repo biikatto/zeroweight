@@ -10,29 +10,33 @@ public class Weapon : MonoBehaviour {
 	public float kineticForce = 10f;
 	public float mountWidth = 1f;
 	public float range = Mathf.Infinity;
-	float weaponCountdown;
-	float cooldown;
-	bool checkForHit;
+	
+	private float weaponCountdown;
+	private float cooldown;
+	private bool checkForHit;
+	private bool destroyed = false;
 
 	public bool debug = true;
 
-	GameObject activeBeam;
-	float activeTime;
-	float beamLength;
+	private GameObject activeBeam;
+	private float activeTime;
+	private float beamLength;
 
 	void Start(){}
 
 	public void Fire(){
-		if(cooldown == 0){
-			activeBeam = Instantiate(weaponBeam, transform.position, transform.rotation) as GameObject;
-			activeBeam.transform.localScale = new Vector3(1f, 1f, range);
-			activeBeam.transform.Translate(Vector3.forward * 0.5f * range);
-			activeBeam.transform.parent = transform;
+		if(!destroyed){
+			if(cooldown == 0){
+				activeBeam = Instantiate(weaponBeam, transform.position, transform.rotation) as GameObject;
+				activeBeam.transform.localScale = new Vector3(1f, 1f, range);
+				activeBeam.transform.Translate(Vector3.forward * 0.5f * range);
+				activeBeam.transform.parent = transform;
 
-			activeTime += weaponTime;
-			cooldown += cooldownTime;
+				activeTime += weaponTime;
+				cooldown += cooldownTime;
 
-			checkForHit = true;
+				checkForHit = true;
+			}
 		}
 	}
 
@@ -85,5 +89,9 @@ public class Weapon : MonoBehaviour {
 	
 	void Update(){
 		ManageTimers();
+	}
+
+	public void Destruct(){
+		destroyed = true;
 	}
 }
