@@ -10,7 +10,7 @@ public class PlayerHealth : MonoBehaviour {
 		hp = maxHP;
 	}
 
-	void AddDamage(float damage){
+	public void AddDamage(float damage){
 		hp -= damage;
 		if(hp <= 0f){
 			hp = 0f;
@@ -19,7 +19,8 @@ public class PlayerHealth : MonoBehaviour {
 		Debug.Log(hp + " HP left");
 	}
 
-	void Destruct(){
+	public void Destruct(){
 		Debug.Log("Player destroyed!");
+		gameObject.GetComponent<PlayerDelegate>().Destruct();
 	}
 }
