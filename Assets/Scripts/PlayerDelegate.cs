@@ -27,6 +27,10 @@ public class PlayerDelegate : MonoBehaviour{
     	}
 	}
 
+	public void AddDamage(float amount){
+		playerHealth.AddDamage(amount);
+	}
+
 	public void XThrust(float amount){
 		thrust.XThrust(amount);
 	}
