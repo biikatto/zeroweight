@@ -51,15 +51,15 @@ public class Thrust : MonoBehaviour {
 		}
 	}
 
-	void XThrust(float thrust){
+	public void XThrust(float thrust){
 		xThrust = thrust;
 	}
 
-	void YThrust(float thrust){
+	public void YThrust(float thrust){
 		yThrust = thrust;
 	}
 
-	void ZThrust(float thrust){
+	public void ZThrust(float thrust){
 		zThrust = thrust;
 	}
 

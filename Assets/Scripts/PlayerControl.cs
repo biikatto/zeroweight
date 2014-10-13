@@ -4,6 +4,7 @@ using System.Collections;
 [AddComponentMenu("Camera/PlayerControl")]
 public class PlayerControl : MonoBehaviour
 {
+	Thrust thrust;
     Vector2 _smoothMouse;
 
     float _rollAbsolute;
@@ -24,6 +25,7 @@ public class PlayerControl : MonoBehaviour
     GameObject rightWeapon;
  
     void Start(){
+		thrust = GetComponent<Thrust>();
     	Transform[] allChildren = gameObject.GetComponentsInChildren<Transform>();
     	foreach(Transform child in allChildren){
     		if(child.gameObject.name == "Left laser"){
@@ -73,9 +75,9 @@ public class PlayerControl : MonoBehaviour
 		}
 
     	// Broadcast thrust messages
-		transform.BroadcastMessage("XThrust", Input.GetAxis((string)inputList["X thrust"]));
-		transform.BroadcastMessage("YThrust", Input.GetAxis((string)inputList["Y thrust"]));
-		transform.BroadcastMessage("ZThrust", Input.GetAxis((string)inputList["Z thrust"]));
+    	thrust.XThrust(Input.GetAxis((string)inputList["X thrust"]));
+		thrust.YThrust(Input.GetAxis((string)inputList["Y thrust"]));
+		thrust.ZThrust(Input.GetAxis((string)inputList["Z thrust"]));
 
         // Ensure the cursor is always locked when set
         Screen.lockCursor = lockCursor;
