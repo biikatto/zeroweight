@@ -8,6 +8,7 @@ public class Weapon : MonoBehaviour {
 	public float weaponDamage = 10f;
 	public float projectileForce = 1000f;
 	public float projectileSize = 1f;
+	public float projectileMass = 1f;
 	
 	private float cooldown;
 	private bool checkForHit;
@@ -24,10 +25,12 @@ public class Weapon : MonoBehaviour {
 		if(!destroyed){
 			if(cooldown == 0){
 				GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation) as GameObject;
-				projectile.rigidbody.AddRelativeForce(Vector3.forward * projectileForce);
+				projectile.rigidbody.mass = projectileMass;
 				projectile.transform.localScale = Vector3.one * projectileSize;
 				projectile.transform.Translate(Vector3.forward * projectileSize);
 				projectile.GetComponent<KineticProjectile>().kineticDamage = weaponDamage;
+
+				projectile.rigidbody.AddRelativeForce(transform.parent.parent.rigidbody.velocity + (Vector3.forward * 10 * projectileMass * projectileForce));
 
 				cooldown += cooldownTime;
 
