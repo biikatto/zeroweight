@@ -22,7 +22,7 @@ public class Weapon : MonoBehaviour {
 
 	void Start(){}
 
-	void Fire(){
+	public void Fire(){
 		if(cooldown == 0){
 			activeBeam = Instantiate(weaponBeam, transform.position, transform.rotation) as GameObject;
 			activeBeam.transform.localScale = new Vector3(1f, 1f, range);

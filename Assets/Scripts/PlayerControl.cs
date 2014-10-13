@@ -5,6 +5,9 @@ using System.Collections;
 public class PlayerControl : MonoBehaviour
 {
 	Thrust thrust;
+	Weapon leftWeapon;
+	Weapon rightWeapon;
+
     Vector2 _smoothMouse;
 
     float _rollAbsolute;
@@ -20,20 +23,19 @@ public class PlayerControl : MonoBehaviour
     bool firstPerson = true;
 
     private Hashtable inputList;
-
-    GameObject leftWeapon;
-    GameObject rightWeapon;
  
     void Start(){
 		thrust = GetComponent<Thrust>();
-    	Transform[] allChildren = gameObject.GetComponentsInChildren<Transform>();
-    	foreach(Transform child in allChildren){
-    		if(child.gameObject.name == "Left laser"){
-    			leftWeapon = child.gameObject;
-    		}else if(child.gameObject.name == "Right laser"){
-    			rightWeapon = child.gameObject;
+
+    	Weapon[] weapons = gameObject.GetComponentsInChildren<Weapon>();
+    	foreach(Weapon weapon in weapons){
+    		if(weapon.gameObject.name == "Left laser"){
+    			leftWeapon = weapon;
+    		}else if(weapon.gameObject.name == "Right laser"){
+    			rightWeapon = weapon;
     		}
     	}
+
     	inputList = new Hashtable();
     	inputList.Add("X thrust", "X thrust");
     	inputList.Add("Y thrust", "Y thrust");
@@ -55,10 +57,10 @@ public class PlayerControl : MonoBehaviour
  
     void FixedUpdate(){
 		if(Input.GetButton((string)inputList["Fire left"])){
-			leftWeapon.BroadcastMessage("Fire");
+			leftWeapon.Fire();
 		}
 		if(Input.GetButton((string)inputList["Fire right"])){
-			rightWeapon.BroadcastMessage("Fire");
+			rightWeapon.Fire();
 		}
 		if(Input.GetButtonDown((string)inputList["Camera select"])){
 			if(firstPerson){
