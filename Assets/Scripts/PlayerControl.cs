@@ -4,9 +4,7 @@ using System.Collections;
 [AddComponentMenu("Camera/PlayerControl")]
 public class PlayerControl : MonoBehaviour
 {
-	Thrust thrust;
-	Weapon leftWeapon;
-	Weapon rightWeapon;
+	PlayerDelegate playerDelegate;
 
     Vector2 _smoothMouse;
 
@@ -25,16 +23,7 @@ public class PlayerControl : MonoBehaviour
     private Hashtable inputList;
  
     void Start(){
-		thrust = GetComponent<Thrust>();
-
-    	Weapon[] weapons = gameObject.GetComponentsInChildren<Weapon>();
-    	foreach(Weapon weapon in weapons){
-    		if(weapon.gameObject.name == "Left laser"){
-    			leftWeapon = weapon;
-    		}else if(weapon.gameObject.name == "Right laser"){
-    			rightWeapon = weapon;
-    		}
-    	}
+    	playerDelegate = gameObject.GetComponent<PlayerDelegate>();
 
     	inputList = new Hashtable();
     	inputList.Add("X thrust", "X thrust");
@@ -57,10 +46,10 @@ public class PlayerControl : MonoBehaviour
  
     void FixedUpdate(){
 		if(Input.GetButton((string)inputList["Fire left"])){
-			leftWeapon.Fire();
+			playerDelegate.FireLeftWeapon();
 		}
 		if(Input.GetButton((string)inputList["Fire right"])){
-			rightWeapon.Fire();
+			playerDelegate.FireRightWeapon();
 		}
 		if(Input.GetButtonDown((string)inputList["Camera select"])){
 			if(firstPerson){
@@ -76,10 +65,9 @@ public class PlayerControl : MonoBehaviour
 			transform.BroadcastMessage("Boost");
 		}
 
-    	// Broadcast thrust messages
-    	thrust.XThrust(Input.GetAxis((string)inputList["X thrust"]));
-		thrust.YThrust(Input.GetAxis((string)inputList["Y thrust"]));
-		thrust.ZThrust(Input.GetAxis((string)inputList["Z thrust"]));
+    	playerDelegate.XThrust(Input.GetAxis((string)inputList["X thrust"]));
+		playerDelegate.YThrust(Input.GetAxis((string)inputList["Y thrust"]));
+		playerDelegate.ZThrust(Input.GetAxis((string)inputList["Z thrust"]));
 
         // Ensure the cursor is always locked when set
         Screen.lockCursor = lockCursor;
@@ -102,4 +90,3 @@ public class PlayerControl : MonoBehaviour
 		//rigidbody.AddTorque(transform.forward * rollThrust * rollPower);
     }
 }
- 
