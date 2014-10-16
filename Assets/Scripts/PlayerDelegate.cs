@@ -2,17 +2,22 @@ using UnityEngine;
 using System.Collections;
 
 public class PlayerDelegate : MonoBehaviour{
-	PlayerControl playerControl;
-	PlayerGUI playerGUI;
-	PlayerHealth playerHealth;
-	Thrust thrust;
 
-	Weapon leftWeapon;
-	Weapon rightWeapon;
+	public bool player2;
+	private PlayerControl playerControl;
+	private PlayerGUI playerGUI;
+	private PlayerHealth playerHealth;
+	private Thrust thrust;
+
+	private Weapon leftWeapon;
+	private Weapon rightWeapon;
+
+	private ScoreKeeper score;
 
 	private bool destroyed = false;
 
 	void Start(){
+		score = FindObjectOfType(typeof(ScoreKeeper)) as ScoreKeeper;
 		playerControl = gameObject.GetComponentInChildren<PlayerControl>();	
 		playerGUI = gameObject.GetComponentInChildren<PlayerGUI>();	
 		playerHealth = gameObject.GetComponentInChildren<PlayerHealth>();	
@@ -25,6 +30,18 @@ public class PlayerDelegate : MonoBehaviour{
     			rightWeapon = weapon;
     		}
     	}
+	}
+
+	public void VelocityMeter(float amount){
+		playerGUI.VelocityMeter(amount);
+	}
+
+	public void BoostMeter(float amount){
+		playerGUI.BoostMeter(amount);
+	}
+
+	public void HPMeter(float amount){
+		playerGUI.HPMeter(amount);
 	}
 
 	public void AddDamage(float amount){
@@ -60,5 +77,11 @@ public class PlayerDelegate : MonoBehaviour{
 		thrust.Destruct();
 		leftWeapon.Destruct();
 		rightWeapon.Destruct();
+		
+		score.AddPoint(player2);
+	}
+
+	public void Pause(bool player1){
+		score.Pause(player1);
 	}
 }
