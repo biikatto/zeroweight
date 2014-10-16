@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 public class Thrust : MonoBehaviour {
@@ -69,30 +70,35 @@ public class Thrust : MonoBehaviour {
 	public void Boost(){
 		if(!boosting){
 			if(boostCooldown <= 0){
-				Debug.Log("Boost begin");
+				//Debug.Log("Boost begin");
 				boosting = true;
 				boostTime = 0f;
 			}else{
-				Debug.Log("Boost cooldown not finished.");
+				//Debug.Log("Boost cooldown not finished.");
 			}
 		}else{
-			Debug.Log("Still boosting.");
+			//Debug.Log("Still boosting.");
 		}
 	}
 
 	private void manageBoost(){
 		if(boosting){
 			boostPower = boostCurve.Evaluate(boostTime/boostLength);
-			transform.BroadcastMessage("boostEnergy", 1f-boostPower);
+			//Debug.Log(1f-(boostTime/boostLength));
+			transform.GetComponent<PlayerDelegate>().BoostMeter(1f-(boostTime/boostLength));
 			boostTime += Time.deltaTime;
 			if(boostTime >= boostLength){
 				boosting = false;
 				boostTime = 0f;
 				boostCooldown = boostCooldownLength;
-				Debug.Log("Boost end");
+				//Debug.Log("Boost end");
 			}
 		}else if(boostCooldown > 0f){
 			boostCooldown -= Time.deltaTime;
+			//Debug.Log(1f-(float)boostCooldown/boostCooldownLength);
+			transform.GetComponent<PlayerDelegate>().BoostMeter(Math.Min(1f,1f-(float)boostCooldown/boostCooldownLength));
+		}else{
+			transform.GetComponent<PlayerDelegate>().BoostMeter(1f);
 		}
 	}
 
@@ -108,6 +114,10 @@ public class Thrust : MonoBehaviour {
 			if(disruptTime < 0f){
 				disruptTime = 0f;
 			}
+		}
+		if(Time.frameCount%3 == 0){
+			//Debug.Log(rigidbody.velocity.magnitude/110f);
+			transform.GetComponent<PlayerDelegate>().VelocityMeter(rigidbody.velocity.magnitude/110f);
 		}
 	}
 
