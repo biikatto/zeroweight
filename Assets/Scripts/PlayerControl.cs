@@ -38,15 +38,16 @@ public class PlayerControl : MonoBehaviour
     	inputList.Add("Fire right", "Fire right");
     	inputList.Add("Camera select", "Camera select");
     	inputList.Add("Boost", "Boost");
+    	inputList.Add("Pause", "Pause");
     	if(player2){
     		foreach(string key in ((Hashtable)inputList.Clone()).Keys){
     			inputList[key] = inputList[key] + " 2";
-    			Debug.Log(inputList[key]);
+    			//Debug.Log(inputList[key]);
     		}
     	}
     }
- 
-    void FixedUpdate(){
+
+    void Update(){
     	if(!destroyed){
 			if(Input.GetButton((string)inputList["Fire left"])){
 				playerDelegate.FireLeftWeapon();
@@ -64,6 +65,11 @@ public class PlayerControl : MonoBehaviour
 				}
 			}
 
+			if(Input.GetButtonDown((string)inputList["Pause"])){
+				Debug.Log(!player2);
+				playerDelegate.Pause(!player2);
+			}
+			
 			if(Input.GetButtonDown((string)inputList["Boost"])){
 				transform.BroadcastMessage("Boost");
 			}
@@ -71,6 +77,11 @@ public class PlayerControl : MonoBehaviour
     		playerDelegate.XThrust(Input.GetAxis((string)inputList["X thrust"]));
 			playerDelegate.YThrust(Input.GetAxis((string)inputList["Y thrust"]));
 			playerDelegate.ZThrust(Input.GetAxis((string)inputList["Z thrust"]));
+		}
+    }
+
+    void FixedUpdate(){
+    	if(!destroyed){
 
         	// Ensure the cursor is always locked when set
         	Screen.lockCursor = lockCursor;
