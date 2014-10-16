@@ -5,6 +5,7 @@ public class PlayerHealth : MonoBehaviour {
 
 	public float maxHP = 100f;
 	private float hp;
+	private bool destroyed = false;
 
 	void Start(){
 		hp = maxHP;
@@ -14,9 +15,13 @@ public class PlayerHealth : MonoBehaviour {
 		hp -= damage;
 		if(hp <= 0f){
 			hp = 0f;
-			Destruct();
+			if(!destroyed){
+				Destruct();
+			}
+			destroyed = true;
 		}
-		Debug.Log(hp + " HP left");
+		//Debug.Log(hp + " HP left");
+		gameObject.GetComponent<PlayerDelegate>().HPMeter(hp/maxHP);
 	}
 
 	public void Destruct(){
