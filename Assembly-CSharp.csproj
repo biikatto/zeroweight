@@ -53,7 +53,7 @@
      <Compile Include="Assets\Scripts\PlayerDelegate.cs" />
      <Compile Include="Assets\Scripts\PlayerGUI.cs" />
      <Compile Include="Assets\Scripts\PlayerHealth.cs" />
-     <Compile Include="Assets\Scripts\SimpleSmoothMouseLook.cs" />
+     <Compile Include="Assets\Scripts\ScoreKeeper.cs" />
      <Compile Include="Assets\Scripts\Target.cs" />
      <Compile Include="Assets\Scripts\Thrust.cs" />
      <Compile Include="Assets\Scripts\Weapon.cs" />
