@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 
 public class PlayerGUI : MonoBehaviour{
@@ -15,29 +16,36 @@ public class PlayerGUI : MonoBehaviour{
 
 	private Rect playerScreen;
 	private Vector2 midScreen;
-	private float _boostEnergy = 1f;
 
 	private GUISkin skin;
 
-	private Texture2D[] accelBarTextures;
+	private Texture2D[] velocityBarTextures;
 	private Texture2D[] boostBarTextures;
 	private Texture2D[] hpBarTextures;
 
-	public Vector2 accelerationBarPosition;
-	public bool verticalAccelerationBar;
-	public int accelerationSegmentOffset;
-	private Vector2[] accelSegPos;
+	private float velocity;
+	public Vector2 velocityBarPosition;
+	/*public*/ private bool verticalVelocityBar;
+	public int velocitySegmentOffset;
+	public Vector2 velocityBarSize = new Vector2(64, 16);
+	private Rect[] velocityBarRect;
+	private Vector2[] velocitySegPos;
 	
+	private float boostEnergy = 1f;
 	public Vector2 boostBarPosition;
-	public bool verticalBoostBar;
+	/*public*/ private bool verticalBoostBar;
 	public int boostSegmentOffset = 28;
 	public Vector2 boostBarSize = new Vector2(64, 16);
 	private Rect[] boostBarRect;
 	private Vector2[] boostSegPos;
 
+	private float hp = 1f;
 	public Vector2 hpBarPosition;
-	private Vector2[] hpSegPos;
+	public Vector2 hpBarSize = new Vector2(256, 256);
+	private Rect hpBarRect;
 
+
+	public int crosshairNumber = 1;
 	Rect crosshairRect;
 
 	void Start(){
@@ -55,34 +63,48 @@ public class PlayerGUI : MonoBehaviour{
 					Screen.height);
 		}
 
-		accelerationBarPosition = new Vector2(
-				playerScreen.xMin + 10,
-				playerScreen.yMax - 10);
 
 		boostBarPosition = new Vector2(
 				playerScreen.xMin + 25,
 				playerScreen.yMax - boostBarSize.y - 10);
 
+		velocityBarPosition = new Vector2(
+			boostBarPosition.x + 32,
+			boostBarPosition.y - boostBarSize.y - 10);
+
+		hpBarPosition = new Vector2(
+			playerScreen.xMax - hpBarSize.x - 10,
+			playerScreen.yMax - hpBarSize.y - 10);
+
 
 		skin = Resources.Load<GUISkin>("defaultGUI");
+		
+		string crosshairPath = "UI/Crosshairs/" + crosshairNumber + "-1";
 
-		crosshairTexture = Resources.Load<Texture2D>("crosshair");
+		crosshairTexture = Resources.Load<Texture2D>(crosshairPath);
 
-		int accelBarSegments = 6;
+		int velocityBarSegments = 6;
 		int boostBarSegments = 6;
-		int hpBarSegments = 10;
+		int hpBarSegments = 11;
 
-		accelBarTextures = new Texture2D[accelBarSegments];
-		accelSegPos = new Vector2[accelBarSegments];
-		for(int i=0;i<accelBarSegments;i++){
+		velocityBarTextures = new Texture2D[velocityBarSegments];
+		velocitySegPos = new Vector2[velocityBarSegments];
+		velocityBarRect = new Rect[velocityBarSegments];
+		for(int i=0;i<velocityBarSegments;i++){
 			string filename = "UI/Accel" + (i + 1);
-			accelBarTextures[i] = Resources.Load<Texture2D>(filename);
-			accelSegPos[i] = accelerationBarPosition;
-			if(verticalAccelerationBar){
-				accelSegPos[i].y += accelerationSegmentOffset;
+			velocityBarTextures[i] = Resources.Load<Texture2D>(filename);
+			Debug.Log(velocityBarTextures);
+			velocitySegPos[i] = velocityBarPosition;
+			if(verticalVelocityBar){
+				velocitySegPos[i].y += velocitySegmentOffset * i;
 			}else{
-				accelSegPos[i].x += accelerationSegmentOffset;
+				velocitySegPos[i].x += velocitySegmentOffset * i;
 			}
+			velocityBarRect[i] = new Rect(
+					velocitySegPos[i].x,
+					velocitySegPos[i].y,
+					velocityBarSize.x,
+					velocityBarSize.y);
 		}
 
 		boostBarTextures = new Texture2D[boostBarSegments];
@@ -91,42 +113,31 @@ public class PlayerGUI : MonoBehaviour{
 		for(int i=0;i<boostBarSegments;i++){
 			string filename = "UI/Cooldown" + (i + 1);
 			boostBarTextures[i] = Resources.Load<Texture2D>(filename);
-			Debug.Log(boostBarTextures[i]);
 			boostSegPos[i] = boostBarPosition;
 			if(verticalBoostBar){
 				boostSegPos[i].y += boostSegmentOffset * i;
 			}else{
-				boostSegPos[i].x += (boostSegmentOffset * i);
+				boostSegPos[i].x += boostSegmentOffset * i;
 			}
 			boostBarRect[i] = new Rect(
 					boostSegPos[i].x,
 					boostSegPos[i].y,
 					boostBarSize.x,
 					boostBarSize.y);
-			Debug.Log(boostBarRect[i]);
 		}
 
 		hpBarTextures = new Texture2D[hpBarSegments];
 		for(int i=0;i<hpBarSegments;i++){
-			string filename = "UI/HP" + (i + 1);
+			string filename = "UI/HPBar/" + (i).ToString("d2");
 			hpBarTextures[i] = Resources.Load<Texture2D>(filename);
 		}
-
-
-		string[] boostBarNames = new string[6];
-		string[] hpBarNames = new string[6];
+		hpBarRect = new Rect(
+			hpBarPosition.x,
+			hpBarPosition.y,
+			hpBarSize.x,
+			hpBarSize.y);
 
 		midScreen = playerScreen.center;
-
-		//boostBarPosition = new Vector2(
-		//		playerScreen.xMax - boostBarSize.x - 10,
-		//		playerScreen.yMax - (boostBarSize.y + 10));
-
-		//boostBarRect = new Rect(
-		//		boostBarPosition.x,
-		//		boostBarPosition.y,
-		//		boostBarSize.x,
-		//		boostBarSize.y);
 				
 		crosshairRect = new Rect(
 				midScreen.x-(crosshairSize.x/2),
@@ -141,15 +152,45 @@ public class PlayerGUI : MonoBehaviour{
 		GUI.color = new Color32(255, 255, 255, transparency);
 		GUI.DrawTexture(crosshairRect, crosshairTexture);
 		drawBoostBar();
+		drawVelocityBar();
+		drawHPBar();
 	}
 
 	void drawBoostBar(){
-		for(int i=0;i<boostBarTextures.Length;i++){
+		int segments = (int)(boostBarTextures.Length*boostEnergy);
+		for(int i=0;i<segments;i++){
 			GUI.DrawTexture(boostBarRect[i], boostBarTextures[i]);
 		}
 	}
 
-	void boostEnergy(float energy){
-		_boostEnergy = energy;
+	void drawVelocityBar(){
+		int segments = (int)(velocityBarTextures.Length*velocity);
+		for(int i=0;i<segments;i++){
+			GUI.DrawTexture(velocityBarRect[i], velocityBarTextures[i]);
+		}
+	}
+
+	void drawHPBar(){
+		GUI.DrawTexture(
+			hpBarRect,
+			hpBarTextures[(int)((hpBarTextures.Length-1)*hp)]);
+	}
+
+	public void VelocityMeter(float amount){
+		velocity = amount;
+		velocity = Math.Min(1f, velocity);
+		velocity = Math.Max(0f, velocity);
+	}
+
+	public void BoostMeter(float energy){
+		boostEnergy = energy;
+		boostEnergy = Math.Min(1f, boostEnergy);
+		boostEnergy = Math.Max(0f, boostEnergy);
+	}
+
+	public void HPMeter(float amount){
+		hp = amount;
+		hp = Math.Min(1f, hp);
+		hp = Math.Max(0f, hp);
 	}
 }
