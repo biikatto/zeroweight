@@ -1,3 +1,5 @@
+// Disrupt engines and add extra reactionary force upon ship collisions
+
 using UnityEngine;
 using System.Collections;
 
@@ -6,6 +8,7 @@ public class Bump : MonoBehaviour {
 	public float disruptTime = 0.15f;
 
 	void Start(){
+		// Find our Thrust component
 		thrust = GetComponent<Thrust>();
 	}
 
