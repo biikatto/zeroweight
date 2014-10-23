@@ -33,8 +33,13 @@ public class KineticProjectile : MonoBehaviour{
 		if(opponent != null){
 			Vector3 distanceVector = (opponent.transform.position-transform.position);
 			rigidbody.AddForce(
-				distanceVector * 1f/distanceVector.magnitude * homingForce * rigidbody.mass);
+					distanceVector * 1f/distanceVector.magnitude * homingForce * rigidbody.mass);
 		}
+	}
+
+	bool IsVisible(Camera cam, GameObject target){
+		Plane[] planes = GeometryUtility.CalculateFrustumPlanes(cam);
+		return GeometryUtility.TestPlanesAABB(planes, target.collider.bounds);
 	}
 
 	GameObject FindOpponent(){
@@ -42,19 +47,21 @@ public class KineticProjectile : MonoBehaviour{
 		foreach(GameObject ship in GameObject.FindGameObjectsWithTag("Player")){
 			// Don't home in on the ship that fired this
 			if(ship != origin){
-				// Initialize targetShip
-				if(targetShip == null){
-					targetShip = ship;
-				}else{
-					// If ship is closer, make it targetShip
-					float shipDistance = Vector3.Distance(
-							transform.position,
-							ship.transform.position);
-					float targetDistance = Vector3.Distance(
-							transform.position,
-							targetShip.transform.position);
-					if(shipDistance < targetDistance){
+				if(IsVisible(gameObject.camera, ship)){
+					// Initialize targetShip
+					if(targetShip == null){
 						targetShip = ship;
+					}else{
+						// If ship is closer and visible, make it targetShip
+						float shipDistance = Vector3.Distance(
+								transform.position,
+								ship.transform.position);
+						float targetDistance = Vector3.Distance(
+								transform.position,
+								targetShip.transform.position);
+						if(shipDistance < targetDistance){
+							targetShip = ship;
+						}
 					}
 				}
 			}
