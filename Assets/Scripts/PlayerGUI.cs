@@ -7,7 +7,6 @@ public class PlayerGUI : MonoBehaviour{
 	public bool horizontalSplit = false;
 	[Tooltip("Check if this is script is attached to player 2.")]
 	public bool player2 = false;
-	public Texture2D crosshairTexture;
 	[Range(0,255)]
 	[Tooltip("Global transparency for GUI elements.")]
 	public byte transparency = 100;
@@ -22,6 +21,8 @@ public class PlayerGUI : MonoBehaviour{
 	private Texture2D[] velocityBarTextures;
 	private Texture2D[] boostBarTextures;
 	private Texture2D[] hpBarTextures;
+	private Texture2D crosshairTexture;
+	private Texture2D crosshairHiliteTexture;
 
 	private float velocity;
 	public Vector2 velocityBarPosition;
@@ -44,9 +45,12 @@ public class PlayerGUI : MonoBehaviour{
 	public Vector2 hpBarSize = new Vector2(256, 256);
 	private Rect hpBarRect;
 
-
 	public int crosshairNumber = 1;
 	Rect crosshairRect;
+
+	public int hitMessageFrames = 10;
+	private int remainingHitMessageFrames;
+	private bool displayingHitMessage = false;
 
 	void Start(){
 		if(player2){
@@ -62,6 +66,8 @@ public class PlayerGUI : MonoBehaviour{
 					Screen.width/2,
 					Screen.height);
 		}
+
+		remainingHitMessageFrames = hitMessageFrames;
 
 
 		boostBarPosition = new Vector2(
@@ -80,8 +86,10 @@ public class PlayerGUI : MonoBehaviour{
 		skin = Resources.Load<GUISkin>("defaultGUI");
 		
 		string crosshairPath = "UI/Crosshairs/" + crosshairNumber + "-1";
+		string crosshairHilitePath = "UI/Crosshairs/" + crosshairNumber + "-2";
 
 		crosshairTexture = Resources.Load<Texture2D>(crosshairPath);
+		crosshairHiliteTexture = Resources.Load<Texture2D>(crosshairHilitePath);
 
 		int velocityBarSegments = 6;
 		int boostBarSegments = 6;
@@ -150,10 +158,22 @@ public class PlayerGUI : MonoBehaviour{
 	void OnGUI(){
 		// Set GUI color for transparency
 		GUI.color = new Color32(255, 255, 255, transparency);
-		GUI.DrawTexture(crosshairRect, crosshairTexture);
+		drawCrosshair();
 		drawBoostBar();
 		drawVelocityBar();
 		drawHPBar();
+	}
+
+	void drawCrosshair(){
+		if(displayingHitMessage){
+			Debug.Log("pubup");
+			GUI.DrawTexture(crosshairRect, crosshairHiliteTexture);
+			if(--remainingHitMessageFrames <= 0){
+				displayingHitMessage = false;
+			}
+		}else{
+			GUI.DrawTexture(crosshairRect, crosshairTexture);
+		}
 	}
 
 	void drawBoostBar(){
@@ -192,5 +212,12 @@ public class PlayerGUI : MonoBehaviour{
 		hp = amount;
 		hp = Math.Min(1f, hp);
 		hp = Math.Max(0f, hp);
+	}
+
+	public void HitMessage(){
+		// Confirm successful weapon hit
+		Debug.Log("Weapon hit");
+		displayingHitMessage = true;
+		remainingHitMessageFrames = hitMessageFrames;
 	}
 }
