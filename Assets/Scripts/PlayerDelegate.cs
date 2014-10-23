@@ -84,4 +84,8 @@ public class PlayerDelegate : MonoBehaviour{
 	public void Pause(bool player1){
 		score.Pause(player1);
 	}
+
+	public void HitMessage(){
+		playerGUI.HitMessage();
+	}
 }
