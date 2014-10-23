@@ -21,11 +21,13 @@ public class Thrust : MonoBehaviour {
 	private float boostCooldown = 0f;
 	private float boostPower = 0f;
 
+	// Thrust power
 	private float thrustPower = 1f;
 	private float xThrustPower = 100f;
 	private float yThrustPower = 100f;
 	private float zThrustPower = 100f;
 
+	// Thrust input
 	private float xThrust = 0f;
 	private float yThrust = 0f;
 	private float zThrust = 0f;
