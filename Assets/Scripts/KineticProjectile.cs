@@ -15,7 +15,6 @@ public class KineticProjectile : MonoBehaviour{
 	}
 
 	void ExplosionEffect(){
-		// Add real explosion effect here
-		Debug.Log("Boom!");
+		// Add explosion effect here
 	}
 }
