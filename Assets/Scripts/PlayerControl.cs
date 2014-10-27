@@ -29,7 +29,6 @@ public class PlayerControl : MonoBehaviour
 
     	inputList = new Hashtable();
     	inputList.Add("X thrust", "X thrust");
-    	inputList.Add("Y thrust", "Y thrust");
     	inputList.Add("Z thrust", "Z thrust");
     	inputList.Add("Roll thrust", "Roll thrust");
     	inputList.Add("Mouse X", "Mouse X");
@@ -37,13 +36,16 @@ public class PlayerControl : MonoBehaviour
     	inputList.Add("Fire left", "Fire left");
     	inputList.Add("Fire right", "Fire right");
     	inputList.Add("Camera select", "Camera select");
-    	inputList.Add("Boost", "Boost");
+    	inputList.Add("Boost left", "Boost left");
+    	inputList.Add("Boost right", "Boost right");
+    	inputList.Add("Boost up", "Boost up");
+    	inputList.Add("Boost down", "Boost down");
     	inputList.Add("Pause", "Pause");
-    	if(player2){
-    		foreach(string key in ((Hashtable)inputList.Clone()).Keys){
+    	foreach(string key in ((Hashtable)inputList.Clone()).Keys){
+    		if(player2){
     			inputList[key] = inputList[key] + " 2";
-    			//Debug.Log(inputList[key]);
     		}
+    		Debug.Log(inputList[key]);
     	}
     }
 
@@ -70,12 +72,27 @@ public class PlayerControl : MonoBehaviour
 				playerDelegate.Pause(!player2);
 			}
 			
-			if(Input.GetButtonDown((string)inputList["Boost"])){
-				transform.BroadcastMessage("Boost");
+			//if(Input.GetButtonDown((string)inputList["Boost"])){
+			//	transform.BroadcastMessage("Boost");
+			//}
+			
+			if(Input.GetButtonDown((string)inputList["Boost left"])){
+				playerDelegate.BoostLeft();
+			}
+
+			if(Input.GetButtonDown((string)inputList["Boost right"])){
+				playerDelegate.BoostRight();
+			}
+
+			if(Input.GetButtonDown((string)inputList["Boost up"])){
+				playerDelegate.BoostUp();
+			}
+
+			if(Input.GetButtonDown((string)inputList["Boost down"])){
+				playerDelegate.BoostDown();
 			}
 
     		playerDelegate.XThrust(Input.GetAxis((string)inputList["X thrust"]));
-			playerDelegate.YThrust(Input.GetAxis((string)inputList["Y thrust"]));
 			playerDelegate.ZThrust(Input.GetAxis((string)inputList["Z thrust"]));
 		}
     }

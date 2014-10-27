@@ -32,6 +32,7 @@ public class PlayerDelegate : MonoBehaviour{
     	}
 	}
 
+	// Meters
 	public void VelocityMeter(float amount){
 		playerGUI.VelocityMeter(amount);
 	}
@@ -44,10 +45,7 @@ public class PlayerDelegate : MonoBehaviour{
 		playerGUI.HPMeter(amount);
 	}
 
-	public void AddDamage(float amount){
-		playerHealth.AddDamage(amount);
-	}
-
+	// Controls
 	public void XThrust(float amount){
 		thrust.XThrust(amount);
 	}
@@ -60,8 +58,20 @@ public class PlayerDelegate : MonoBehaviour{
 		thrust.ZThrust(amount);
 	}
 
-	public void Boost(){
-		thrust.Boost();
+	public void BoostLeft(){
+		thrust.BoostLeft();
+	}
+
+	public void BoostRight(){
+		thrust.BoostRight();
+	}
+
+	public void BoostUp(){
+		thrust.BoostUp();
+	}
+
+	public void BoostDown(){
+		thrust.BoostDown();
 	}
 
 	public void FireLeftWeapon(){
@@ -70,6 +80,10 @@ public class PlayerDelegate : MonoBehaviour{
 
 	public void FireRightWeapon(){
 		rightWeapon.Fire();
+	}
+
+	public void AddDamage(float amount){
+		playerHealth.AddDamage(amount);
 	}
 
 	public void Destruct(){

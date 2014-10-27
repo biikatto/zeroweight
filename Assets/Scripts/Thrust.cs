@@ -15,12 +15,6 @@ public class Thrust : MonoBehaviour {
 	public float boostCooldownLength = 0.5f;
 	public float boostThrust = 2.5f;
 
-	// Private instantaneous values
-	private bool boosting = false;
-	private float boostTime = 0f;
-	private float boostCooldown = 0f;
-	private float boostPower = 0f;
-
 	// Thrust power
 	private float thrustPower = 1f;
 	private float xThrustPower = 100f;
@@ -69,48 +63,64 @@ public class Thrust : MonoBehaviour {
 		zThrust = thrust;
 	}
 
-	public void Boost(){
-		if(!boosting){
-			if(boostCooldown <= 0){
-				//Debug.Log("Boost begin");
-				boosting = true;
-				boostTime = 0f;
-			}else{
-				//Debug.Log("Boost cooldown not finished.");
-			}
-		}else{
-			//Debug.Log("Still boosting.");
-		}
+	public void BoostLeft(){
+		rigidbody.AddRelativeForce(Vector3.left * boostThrust);
+	}
+	
+	public void BoostRight(){
+		rigidbody.AddRelativeForce(Vector3.right * boostThrust);
+	}
+
+	public void BoostUp(){
+		rigidbody.AddRelativeForce(Vector3.up * boostThrust);
+	}
+
+	public void BoostDown(){
+		rigidbody.AddRelativeForce(Vector3.down * boostThrust);
+	}
+
+	public void OldBoost(){
+		//if(!boosting){
+		//	if(boostCooldown <= 0){
+		//		//Debug.Log("Boost begin");
+		//		boosting = true;
+		//		boostTime = 0f;
+		//	}else{
+		//		//Debug.Log("Boost cooldown not finished.");
+		//	}
+		//}else{
+		//	//Debug.Log("Still boosting.");
+		//}
 	}
 
 	private void manageBoost(){
-		if(boosting){
-			boostPower = boostCurve.Evaluate(boostTime/boostLength);
-			//Debug.Log(1f-(boostTime/boostLength));
-			transform.GetComponent<PlayerDelegate>().BoostMeter(1f-(boostTime/boostLength));
-			boostTime += Time.deltaTime;
-			if(boostTime >= boostLength){
-				boosting = false;
-				boostTime = 0f;
-				boostCooldown = boostCooldownLength;
-				//Debug.Log("Boost end");
-			}
-		}else if(boostCooldown > 0f){
-			boostCooldown -= Time.deltaTime;
-			//Debug.Log(1f-(float)boostCooldown/boostCooldownLength);
-			transform.GetComponent<PlayerDelegate>().BoostMeter(Math.Min(1f,1f-(float)boostCooldown/boostCooldownLength));
-		}else{
-			transform.GetComponent<PlayerDelegate>().BoostMeter(1f);
-		}
+		//if(boosting){
+		//	boostPower = boostCurve.Evaluate(boostTime/boostLength);
+		//	//Debug.Log(1f-(boostTime/boostLength));
+		//	transform.GetComponent<PlayerDelegate>().BoostMeter(1f-(boostTime/boostLength));
+		//	boostTime += Time.deltaTime;
+		//	if(boostTime >= boostLength){
+		//		boosting = false;
+		//		boostTime = 0f;
+		//		boostCooldown = boostCooldownLength;
+		//		//Debug.Log("Boost end");
+		//	}
+		//}else if(boostCooldown > 0f){
+		//	boostCooldown -= Time.deltaTime;
+		//	//Debug.Log(1f-(float)boostCooldown/boostCooldownLength);
+		//	transform.GetComponent<PlayerDelegate>().BoostMeter(Math.Min(1f,1f-(float)boostCooldown/boostCooldownLength));
+		//}else{
+		//	transform.GetComponent<PlayerDelegate>().BoostMeter(1f);
+		//}
 	}
 
 	void FixedUpdate(){
 		adjustThrust(Input.GetAxis("Mouse ScrollWheel"));
-		manageBoost();
+		//manageBoost();
 		if(disruptTime <= 0f){
-			rigidbody.AddRelativeForce(Vector3.right * (xThrust * xThrustPower * thrustPower * (1f + boostPower * boostThrust)) * Time.deltaTime);
-			rigidbody.AddRelativeForce(Vector3.up * (yThrust * yThrustPower * thrustPower * (1f + boostPower * boostThrust)) * Time.deltaTime);
-			rigidbody.AddRelativeForce(Vector3.forward * (zThrust * zThrustPower * thrustPower * (1f + boostPower * boostThrust)) * Time.deltaTime);
+			rigidbody.AddRelativeForce(Vector3.right * (xThrust * xThrustPower * thrustPower /* * (1f + boostPower * boostThrust)*/) * Time.deltaTime);
+			rigidbody.AddRelativeForce(Vector3.up * (yThrust * yThrustPower * thrustPower /* * (1f + boostPower * boostThrust)*/) * Time.deltaTime);
+			rigidbody.AddRelativeForce(Vector3.forward * (zThrust * zThrustPower * thrustPower /* * (1f + boostPower * boostThrust)*/) * Time.deltaTime);
 		}else{
 			disruptTime -= Time.deltaTime;
 			if(disruptTime < 0f){
