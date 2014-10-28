@@ -4,6 +4,10 @@ using System.Collections;
 public class PlayerDelegate : MonoBehaviour{
 
 	public bool player2;
+
+	public float maxEnergy = 100f;
+	private float energy;
+
 	private PlayerControl playerControl;
 	private PlayerGUI playerGUI;
 	private PlayerHealth playerHealth;
@@ -17,6 +21,7 @@ public class PlayerDelegate : MonoBehaviour{
 	private bool destroyed = false;
 
 	void Start(){
+		energy = maxEnergy;
 		score = FindObjectOfType(typeof(ScoreKeeper)) as ScoreKeeper;
 		playerControl = gameObject.GetComponentInChildren<PlayerControl>();	
 		playerGUI = gameObject.GetComponentInChildren<PlayerGUI>();	
@@ -30,6 +35,17 @@ public class PlayerDelegate : MonoBehaviour{
     			rightWeapon = weapon;
     		}
     	}
+	}
+
+	// Call this method when an ability requires energy
+	// returns true and drains energy if enough is available
+	// returns false and does not drain if not enough is available
+	public bool UseEnergy(float amount){
+		if(amount > energy){
+			return false;
+		}
+		energy -= amount;
+		return true;
 	}
 
 	// Meters

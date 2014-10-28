@@ -11,9 +11,8 @@ public class Thrust : MonoBehaviour {
 	public AnimationCurve boostCurve;
 
 	// Public maxima
-	public float boostLength = 1.5f;
-	public float boostCooldownLength = 0.5f;
 	public float boostThrust = 2.5f;
+	public float boostEnergyCost = 10f;
 
 	// Thrust power
 	private float thrustPower = 1f;
@@ -30,12 +29,15 @@ public class Thrust : MonoBehaviour {
 
 	private Vector3 velocity;
 
+	private PlayerDelegate pDelegate;
+
 	void Start(){
 		thrustPower = maxThrust;
 		boostCurve = new AnimationCurve(new Keyframe(0f, 0f),
 										new Keyframe(0.1f, 1f), 
 										new Keyframe(0.8f, 1f), 
 										new Keyframe(1.0f, 0f));
+		pDelegate = gameObject.GetComponentInChildren<PlayerDelegate>();	
 	}
 
 	public void Destruct(){
@@ -63,20 +65,26 @@ public class Thrust : MonoBehaviour {
 		zThrust = thrust;
 	}
 
+	private void Boost(Vector3 thrust){
+		if(pDelegate.UseEnergy(boostEnergyCost)){
+			rigidbody.AddRelativeForce(thrust);
+		}
+	}
+
 	public void BoostLeft(){
-		rigidbody.AddRelativeForce(Vector3.left * boostThrust);
+		Boost(Vector3.left * boostThrust);
 	}
 	
 	public void BoostRight(){
-		rigidbody.AddRelativeForce(Vector3.right * boostThrust);
+		Boost(Vector3.right * boostThrust);
 	}
 
 	public void BoostUp(){
-		rigidbody.AddRelativeForce(Vector3.up * boostThrust);
+		Boost(Vector3.up * boostThrust);
 	}
 
 	public void BoostDown(){
-		rigidbody.AddRelativeForce(Vector3.down * boostThrust);
+		Boost(Vector3.down * boostThrust);
 	}
 
 	public void OldBoost(){
