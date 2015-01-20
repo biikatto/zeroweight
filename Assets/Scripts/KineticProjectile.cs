@@ -31,6 +31,8 @@ public class KineticProjectile : MonoBehaviour{
 		Destroy(gameObject);
 	}
 
+	// Propel the projectile towards the nearest
+	// opponent in view
 	void SeekOpponent(){
 		GameObject opponent = FindOpponent();
 		if(opponent != null){
@@ -74,6 +76,7 @@ public class KineticProjectile : MonoBehaviour{
 		return targetShip;
 	}
 
+    // Triggered when this projectile explodes
 	void ExplosionEffect(){
 		// Add explosion effect here
 	}
