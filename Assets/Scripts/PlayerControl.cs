@@ -35,6 +35,8 @@ public class PlayerControl : MonoBehaviour
     	inputList.Add("Mouse Y", "Mouse Y");
     	inputList.Add("Fire left", "Fire left");
     	inputList.Add("Fire right", "Fire right");
+    	inputList.Add("Shield left", "Shield left");
+    	inputList.Add("Shield right", "Shield right");
     	inputList.Add("Camera select", "Camera select");
     	inputList.Add("Boost left", "Boost left");
     	inputList.Add("Boost right", "Boost right");
@@ -56,6 +58,19 @@ public class PlayerControl : MonoBehaviour
 			}
 			if(Input.GetButton((string)inputList["Fire right"])){
 				playerDelegate.FireRightWeapon();
+			}
+    	    //---------------- Shields ----------------------------------
+			if(Input.GetButtonDown((string)inputList["Shield left"])){
+				playerDelegate.BeginShieldLeft();
+			}
+			if(Input.GetButtonUp((string)inputList["Shield left"])){
+				playerDelegate.EndShieldLeft();
+			}
+			if(Input.GetButtonDown((string)inputList["Shield right"])){
+				playerDelegate.BeginShieldRight();
+			}
+			if(Input.GetButtonUp((string)inputList["Shield right"])){
+				playerDelegate.EndShieldRight();
 			}
 			if(Input.GetButtonDown((string)inputList["Camera select"])){
 				if(firstPerson){
