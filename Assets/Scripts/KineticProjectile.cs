@@ -27,10 +27,10 @@ public class KineticProjectile : MonoBehaviour{
 	}
 
 	void FixedUpdate(){
-		Home();
+		SeekOpponent();
 	}
 
-	void Home(){
+	void SeekOpponent(){
 		GameObject opponent = FindOpponent();
 		if(opponent != null){
 			Vector3 distanceVector = (opponent.transform.position-transform.position);
