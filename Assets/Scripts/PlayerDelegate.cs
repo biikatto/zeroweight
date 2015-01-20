@@ -31,7 +31,7 @@ public class PlayerDelegate : MonoBehaviour{
         playerHealth = gameObject.GetComponentInChildren<PlayerHealth>();
         thrust = gameObject.GetComponentInChildren<Thrust>();
 
-        foreach(ChargedShot weapon in gameObject.GetComponentsInChildren(typeof(IWeapon))){
+        foreach(Weapon weapon in gameObject.GetComponentsInChildren(typeof(IWeapon))){
             Debug.Log("Weapon");
             if(weapon.gameObject.name == "Left laser"){
                 leftWeapon = weapon;
