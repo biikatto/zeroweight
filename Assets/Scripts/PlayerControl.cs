@@ -53,12 +53,20 @@ public class PlayerControl : MonoBehaviour
 
     void Update(){
     	if(!destroyed){
-			if(Input.GetButton((string)inputList["Fire left"])){
-				playerDelegate.FireLeftWeapon();
+    	    //---------------- Weapons ----------------------------------
+			if(Input.GetButtonDown((string)inputList["Fire left"])){
+				playerDelegate.BeginFireLeftWeapon();
 			}
-			if(Input.GetButton((string)inputList["Fire right"])){
-				playerDelegate.FireRightWeapon();
+			if(Input.GetButtonUp((string)inputList["Fire left"])){
+				playerDelegate.EndFireLeftWeapon();
 			}
+			if(Input.GetButtonDown((string)inputList["Fire right"])){
+				playerDelegate.BeginFireRightWeapon();
+			}
+			if(Input.GetButtonUp((string)inputList["Fire right"])){
+				playerDelegate.EndFireRightWeapon();
+			}
+
     	    //---------------- Shields ----------------------------------
 			if(Input.GetButtonDown((string)inputList["Shield left"])){
 				playerDelegate.BeginShieldLeft();
@@ -72,6 +80,8 @@ public class PlayerControl : MonoBehaviour
 			if(Input.GetButtonUp((string)inputList["Shield right"])){
 				playerDelegate.EndShieldRight();
 			}
+
+    	    //---------------- Camera ----------------------------------
 			if(Input.GetButtonDown((string)inputList["Camera select"])){
 				if(firstPerson){
 					gameObject.BroadcastMessage("ThirdPerson");
@@ -82,6 +92,7 @@ public class PlayerControl : MonoBehaviour
 				}
 			}
 
+    	    //---------------- Pause ----------------------------------
 			if(Input.GetButtonDown((string)inputList["Pause"])){
 				Debug.Log(!player2);
 				playerDelegate.Pause(!player2);
@@ -91,6 +102,7 @@ public class PlayerControl : MonoBehaviour
 			//	transform.BroadcastMessage("Boost");
 			//}
 			
+    	    //---------------- Boost ----------------------------------
 			if(Input.GetButtonDown((string)inputList["Boost left"])){
 				playerDelegate.BoostLeft();
 			}
@@ -107,6 +119,7 @@ public class PlayerControl : MonoBehaviour
 				playerDelegate.BoostDown();
 			}
 
+    	    //---------------- Thrust ----------------------------------
     		playerDelegate.XThrust(Input.GetAxis((string)inputList["X thrust"]));
 			playerDelegate.ZThrust(Input.GetAxis((string)inputList["Z thrust"]));
 		}
