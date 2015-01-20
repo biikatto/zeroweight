@@ -9,6 +9,10 @@ public class KineticProjectile : MonoBehaviour{
 	// Who fired the weapon?
 	private GameObject origin;
 
+	void FixedUpdate(){
+		SeekOpponent();
+	}
+
 	public GameObject Origin{
 	    get{ return origin; }
 	    set{ origin = value; }
@@ -25,10 +29,6 @@ public class KineticProjectile : MonoBehaviour{
 			origin.GetComponent<PlayerDelegate>().HitMessage();
 		}
 		Destroy(gameObject);
-	}
-
-	void FixedUpdate(){
-		SeekOpponent();
 	}
 
 	void SeekOpponent(){
