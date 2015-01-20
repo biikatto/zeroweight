@@ -3,119 +3,153 @@ using System.Collections;
 
 public class PlayerDelegate : MonoBehaviour{
 
-	public bool player2;
+    public bool player2;
 
-	public float maxEnergy = 100f;
-	private float energy;
+    public float maxEnergy = 100f;
+    private float energy;
 
-	private PlayerControl playerControl;
-	private PlayerGUI playerGUI;
-	private PlayerHealth playerHealth;
-	private Thrust thrust;
+    private PlayerControl playerControl;
+    private PlayerGUI playerGUI;
+    private PlayerHealth playerHealth;
+    private Thrust thrust;
 
-	private Weapon leftWeapon;
-	private Weapon rightWeapon;
+    private Weapon leftWeapon;
+    private Weapon rightWeapon;
 
-	private ScoreKeeper score;
+    private Shield leftShield;
+    private Shield rightShield;
 
-	private bool destroyed = false;
+    private ScoreKeeper score;
 
-	void Start(){
-		energy = maxEnergy;
-		score = FindObjectOfType(typeof(ScoreKeeper)) as ScoreKeeper;
-		playerControl = gameObject.GetComponentInChildren<PlayerControl>();	
-		playerGUI = gameObject.GetComponentInChildren<PlayerGUI>();	
-		playerHealth = gameObject.GetComponentInChildren<PlayerHealth>();	
-		thrust = gameObject.GetComponentInChildren<Thrust>();
+    private bool destroyed = false;
 
-    	foreach(Weapon weapon in gameObject.GetComponentsInChildren<Weapon>()){
-    		if(weapon.gameObject.name == "Left laser"){
-    			leftWeapon = weapon;
-    		}else if(weapon.gameObject.name == "Right laser"){
-    			rightWeapon = weapon;
-    		}
-    	}
-	}
+    void Start(){
+        energy = maxEnergy;
+        score = FindObjectOfType(typeof(ScoreKeeper)) as ScoreKeeper;
+        playerControl = gameObject.GetComponentInChildren<PlayerControl>();
+        playerGUI = gameObject.GetComponentInChildren<PlayerGUI>();
+        playerHealth = gameObject.GetComponentInChildren<PlayerHealth>();
+        thrust = gameObject.GetComponentInChildren<Thrust>();
 
-	// Call this method when an ability requires energy
-	// returns true and drains energy if enough is available
-	// returns false and does not drain if not enough is available
-	public bool UseEnergy(float amount){
-		if(amount > energy){
-			return false;
-		}
-		energy -= amount;
-		return true;
-	}
+        foreach(ChargedShot weapon in gameObject.GetComponentsInChildren(typeof(IWeapon))){
+            Debug.Log("Weapon");
+            if(weapon.gameObject.name == "Left laser"){
+                leftWeapon = weapon;
+            }else if(weapon.gameObject.name == "Right laser"){
+                rightWeapon = weapon;
+            }
+        }
+    }
 
-	// Meters
-	public void VelocityMeter(float amount){
-		playerGUI.VelocityMeter(amount);
-	}
+    // Call this method when an ability requires energy
+    // returns true and drains energy if enough is available
+    // returns false and does not drain if not enough is available
+    public bool UseEnergy(float amount){
+        if(amount > energy){
+            return false;
+        }
+        energy -= amount;
+        return true;
+    }
 
-	public void BoostMeter(float amount){
-		playerGUI.BoostMeter(amount);
-	}
+    // Meters
+    public void VelocityMeter(float amount){
+        playerGUI.VelocityMeter(amount);
+    }
 
-	public void HPMeter(float amount){
-		playerGUI.HPMeter(amount);
-	}
+    public void BoostMeter(float amount){
+        playerGUI.BoostMeter(amount);
+    }
 
-	// Controls
-	public void XThrust(float amount){
-		thrust.XThrust(amount);
-	}
+    public void HPMeter(float amount){
+        playerGUI.HPMeter(amount);
+    }
 
-	public void YThrust(float amount){
-		thrust.YThrust(amount);
-	}
+    // Controls
 
-	public void ZThrust(float amount){
-		thrust.ZThrust(amount);
-	}
+    // Thrust
+    public void XThrust(float amount){
+        thrust.XThrust(amount);
+    }
 
-	public void BoostLeft(){
-		thrust.BoostLeft();
-	}
+    public void YThrust(float amount){
+        thrust.YThrust(amount);
+    }
 
-	public void BoostRight(){
-		thrust.BoostRight();
-	}
+    public void ZThrust(float amount){
+        thrust.ZThrust(amount);
+    }
 
-	public void BoostUp(){
-		thrust.BoostUp();
-	}
+    // Boost
+    public void BoostLeft(){
+        thrust.BoostLeft();
+    }
 
-	public void BoostDown(){
-		thrust.BoostDown();
-	}
+    public void BoostRight(){
+        thrust.BoostRight();
+    }
 
-	public void FireLeftWeapon(){
-		leftWeapon.Fire();
-	}
+    public void BoostUp(){
+        thrust.BoostUp();
+    }
 
-	public void FireRightWeapon(){
-		rightWeapon.Fire();
-	}
+    public void BoostDown(){
+        thrust.BoostDown();
+    }
 
-	public void AddDamage(float amount){
-		playerHealth.AddDamage(amount);
-	}
+    // Weapons
+    public void BeginFireLeftWeapon(){
+        leftWeapon.BeginFire();
+    }
 
-	public void Destruct(){
-		playerControl.Destruct();
-		thrust.Destruct();
-		leftWeapon.Destruct();
-		rightWeapon.Destruct();
-		
-		score.AddPoint(player2);
-	}
+    public void EndFireLeftWeapon(){
+        leftWeapon.EndFire();
+    }
 
-	public void Pause(bool player1){
-		score.Pause(player1);
-	}
+    public void BeginFireRightWeapon(){
+        rightWeapon.BeginFire();
+    }
 
-	public void HitMessage(){
-		playerGUI.HitMessage();
-	}
+    public void EndFireRightWeapon(){
+        rightWeapon.EndFire();
+    }
+
+    // s
+    public void BeginShieldLeft(){
+        leftShield.BeginShield();
+    }
+
+    public void EndShieldLeft(){
+        leftShield.EndShield();
+    }
+
+    public void BeginShieldRight(){
+        rightShield.BeginShield();
+    }
+
+    public void EndShieldRight(){
+        rightShield.EndShield();
+    }
+
+    // Damage
+    public void AddDamage(float amount){
+        playerHealth.AddDamage(amount);
+    }
+
+    public void Destruct(){
+        playerControl.Destruct();
+        thrust.Destruct();
+        //leftWeapon.Destruct();
+        //rightWeapon.Destruct();
+
+        score.AddPoint(player2);
+    }
+
+    public void Pause(bool player1){
+        score.Pause(player1);
+    }
+
+    public void HitMessage(){
+        playerGUI.HitMessage();
+    }
 }
