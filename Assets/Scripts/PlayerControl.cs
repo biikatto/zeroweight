@@ -98,10 +98,6 @@ public class PlayerControl : MonoBehaviour
 				playerDelegate.Pause(!player2);
 			}
 			
-			//if(Input.GetButtonDown((string)inputList["Boost"])){
-			//	transform.BroadcastMessage("Boost");
-			//}
-			
     	    //---------------- Boost ----------------------------------
 			if(Input.GetButtonDown((string)inputList["Boost left"])){
 				playerDelegate.BoostLeft();
