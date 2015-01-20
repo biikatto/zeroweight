@@ -9,8 +9,9 @@ public class KineticProjectile : MonoBehaviour{
 	// Who fired the weapon?
 	private GameObject origin;
 
-	public void SetOrigin(GameObject newOrigin){
-		origin = newOrigin;
+	public GameObject Origin{
+	    get{ return origin; }
+	    set{ origin = value; }
 	}
 
 	void OnCollisionEnter(Collision collision){

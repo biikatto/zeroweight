@@ -46,7 +46,7 @@ public class OldWeapon : MonoBehaviour {
 			projectile.transform.localScale = Vector3.one * projectileSize;
 			projectile.transform.Translate(Vector3.forward * projectileSize);
 			projectile.GetComponent<KineticProjectile>().kineticDamage = weaponDamage;
-			projectile.GetComponent<KineticProjectile>().SetOrigin(transform.parent.parent.gameObject);
+			projectile.GetComponent<KineticProjectile>().Origin = transform.parent.parent.gameObject;
 			projectile.GetComponent<KineticProjectile>().homingForce = projectileHomingForce;
 			projectile.GetComponent<KineticProjectile>().homingRadius = projectileHomingRadius;
 
