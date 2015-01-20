@@ -18,7 +18,9 @@ public class KineticProjectile : MonoBehaviour{
 
 		ContactPoint contact = collision.contacts[0];
 		if(contact.otherCollider.gameObject.tag == "Player"){
+		    // Apply damage
 			contact.otherCollider.gameObject.GetComponent<PlayerDelegate>().AddDamage(kineticDamage);
+		    // Activate hit message on opponent
 			origin.GetComponent<PlayerDelegate>().HitMessage();
 		}
 		Destroy(gameObject);
@@ -37,11 +39,13 @@ public class KineticProjectile : MonoBehaviour{
 		}
 	}
 
+    // Check if a GameObject is visible to this camera
 	bool IsVisible(Camera cam, GameObject target){
 		Plane[] planes = GeometryUtility.CalculateFrustumPlanes(cam);
 		return GeometryUtility.TestPlanesAABB(planes, target.collider.bounds);
 	}
 
+    // Return GameObject corresponding to opponent in view
 	GameObject FindOpponent(){
 		GameObject targetShip = null;
 		foreach(GameObject ship in GameObject.FindGameObjectsWithTag("Player")){
