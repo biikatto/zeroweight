@@ -16,8 +16,7 @@ public class PlayerDelegate : MonoBehaviour{
     private Weapon leftWeapon;
     private Weapon rightWeapon;
 
-    private Shield leftShield;
-    private Shield rightShield;
+    private Shield shield;
 
     private ScoreKeeper score;
 
@@ -30,6 +29,8 @@ public class PlayerDelegate : MonoBehaviour{
         playerGUI = gameObject.GetComponentInChildren<PlayerGUI>();
         playerHealth = gameObject.GetComponentInChildren<PlayerHealth>();
         thrust = gameObject.GetComponentInChildren<Thrust>();
+        
+        shield = gameObject.AddComponent("Shield") as Shield;
 
         foreach(Weapon weapon in gameObject.GetComponentsInChildren(typeof(IWeapon))){
             Debug.Log("Weapon");
@@ -116,19 +117,19 @@ public class PlayerDelegate : MonoBehaviour{
 
     // s
     public void BeginShieldLeft(){
-        leftShield.BeginShield();
+        shield.BeginShieldLeft();
     }
 
     public void EndShieldLeft(){
-        leftShield.EndShield();
+        shield.EndShieldLeft();
     }
 
     public void BeginShieldRight(){
-        rightShield.BeginShield();
+        shield.BeginShieldRight();
     }
 
     public void EndShieldRight(){
-        rightShield.EndShield();
+        shield.EndShieldRight();
     }
 
     // Damage
