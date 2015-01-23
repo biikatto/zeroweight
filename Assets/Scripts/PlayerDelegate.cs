@@ -31,9 +31,9 @@ public class PlayerDelegate : MonoBehaviour{
         thrust = gameObject.GetComponentInChildren<Thrust>();
         
         shield = gameObject.AddComponent("Shield") as Shield;
+        shield.PDelegate = this;
 
         foreach(Weapon weapon in gameObject.GetComponentsInChildren(typeof(IWeapon))){
-            Debug.Log("Weapon");
             if(weapon.gameObject.name == "Left laser"){
                 leftWeapon = weapon;
             }else if(weapon.gameObject.name == "Right laser"){
