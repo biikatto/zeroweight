@@ -13,3 +13,5 @@ Build/
 *.booproj
 
 sysinfo.txt
+
+*.*.swp
