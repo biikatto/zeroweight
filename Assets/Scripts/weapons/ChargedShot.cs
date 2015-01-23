@@ -226,7 +226,6 @@ public class ChargedShot : Weapon,
             return projectileColor;
         }
         set{
-            Debug.Log(projectileColor);
             projectileColor = value;
             if(projectileColor == "Blue"){
                 projectilePrefab = Resources.Load(

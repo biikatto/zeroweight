@@ -18,15 +18,21 @@ public class KineticProjectile : MonoBehaviour{
 	    set{ origin = value; }
 	}
 
+	void Start(){}
+
 	void OnCollisionEnter(Collision collision){
 		ExplosionEffect();
 
 		ContactPoint contact = collision.contacts[0];
 		if(contact.otherCollider.gameObject.tag == "Player"){
+		    print("Hit player");
 		    // Apply damage
 			contact.otherCollider.gameObject.GetComponent<PlayerDelegate>().AddDamage(kineticDamage);
 		    // Activate hit message on opponent
 			origin.GetComponent<PlayerDelegate>().HitMessage();
+		}else if(contact.otherCollider.gameObject.tag == "Shield"){
+		    print("Hit shield");
+		    contact.otherCollider.gameObject.transform.parent.GetComponent<Shield>().Impact(kineticDamage);
 		}
 		Destroy(gameObject);
 	}

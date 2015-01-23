@@ -38,8 +38,6 @@ public class ChargedShotEditor : Editor{
         ChargeMenu(shot);
 
         ProjectileMenu(shot);
-
-        ProjectileColor(shot);
     }
 
     private void ProjectileMenu(ChargedShot shot){
@@ -70,6 +68,8 @@ public class ChargedShotEditor : Editor{
                     shot.ProjectileForce,
                     0.1f,
                     1000f);
+
+            ProjectileColor(shot);
 
             EditorGUI.indentLevel--;
         }

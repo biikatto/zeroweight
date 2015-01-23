@@ -101,7 +101,6 @@ public class PlayerGUI : MonoBehaviour{
 		for(int i=0;i<velocityBarSegments;i++){
 			string filename = "UI/Accel" + (i + 1);
 			velocityBarTextures[i] = Resources.Load<Texture2D>(filename);
-			Debug.Log(velocityBarTextures);
 			velocitySegPos[i] = velocityBarPosition;
 			if(verticalVelocityBar){
 				velocitySegPos[i].y += velocitySegmentOffset * i;
@@ -166,7 +165,6 @@ public class PlayerGUI : MonoBehaviour{
 
 	void drawCrosshair(){
 		if(displayingHitMessage){
-			Debug.Log("pubup");
 			GUI.DrawTexture(crosshairRect, crosshairHiliteTexture);
 			if(--remainingHitMessageFrames <= 0){
 				displayingHitMessage = false;
@@ -216,7 +214,6 @@ public class PlayerGUI : MonoBehaviour{
 
 	public void HitMessage(){
 		// Confirm successful weapon hit
-		Debug.Log("Weapon hit");
 		displayingHitMessage = true;
 		remainingHitMessageFrames = hitMessageFrames;
 	}
