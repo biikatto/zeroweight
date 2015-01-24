@@ -7,6 +7,7 @@ public class PlayerDelegate : MonoBehaviour{
 
     public float maxEnergy = 100f;
     private float energy;
+    private float energyRegenRate = 10f;
 
     private PlayerControl playerControl;
     private PlayerGUI playerGUI;
@@ -40,6 +41,7 @@ public class PlayerDelegate : MonoBehaviour{
                 rightWeapon = weapon;
             }
         }
+        StartCoroutine("RegenerateEnergy");
     }
 
     // Call this method when an ability requires energy
@@ -51,6 +53,15 @@ public class PlayerDelegate : MonoBehaviour{
         }
         energy -= amount;
         return true;
+    }
+
+    private IEnumerator RegenerateEnergy(){
+        while(true){
+            energy += Time.deltaTime * energyRegenRate;
+            energy = Mathf.Min(maxEnergy, energy);
+            Debug.Log(energy);
+            yield return null;
+        }
     }
 
     // Meters
