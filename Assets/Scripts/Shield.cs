@@ -10,7 +10,7 @@ public class Shield : MonoBehaviour {
     private bool upkeepActive = false;
 
     [SerializeField]
-        private float energyCost = 1f;
+        private float energyCost = 15f;
 
     public float EnergyCost{
         get{ return energyCost; }
