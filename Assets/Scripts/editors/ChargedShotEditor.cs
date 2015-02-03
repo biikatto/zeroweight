@@ -8,7 +8,7 @@ public class ChargedShotEditor : Editor{
 
     bool showHoming = false;
     bool showCharge = false;
-    bool showProjectile = false;
+    bool showPreCharge = false;
 
     string[] colors = {"Red", "Green", "Blue", "Yellow"};
     System.Collections.Generic.Dictionary<string, int> colorDict =
@@ -24,26 +24,31 @@ public class ChargedShotEditor : Editor{
 
         EditorGUILayout.LabelField("Active", shot.Active.ToString());
 
-        shot.WeaponDamage = EditorGUILayout.FloatField(
-                "Weapon Damage", shot.WeaponDamage);
-        shot.EnergyCost = EditorGUILayout.FloatField(
-                "Energy Cost", shot.EnergyCost);
+        EditorGUILayout.LabelField("Cooldown Ready", shot.CooldownReady.ToString());
+
+        CooldownField(shot);
+
+        PreChargeMenu(shot);
+
+        ChargeMenu(shot);
+        EditorGUILayout.LabelField("Charging", shot.Charging.ToString());
 
         HomingMenu(shot);
 
-        EditorGUILayout.LabelField("Cooldown Ready", shot.CooldownReady.ToString());
-        CooldownField(shot);
-
-        EditorGUILayout.LabelField("Charging", shot.Charging.ToString());
-        ChargeMenu(shot);
-
-        ProjectileMenu(shot);
+        ProjectileColor(shot);
     }
 
-    private void ProjectileMenu(ChargedShot shot){
-        showProjectile = EditorGUILayout.Foldout(showProjectile, "Projectile");
-        if(showProjectile){
+    private void PreChargeMenu(ChargedShot shot){
+        showPreCharge = EditorGUILayout.Foldout(showPreCharge, "Pre-charge");
+        if(showPreCharge){
             EditorGUI.indentLevel++;
+            
+            shot.EnergyCost = EditorGUILayout.FloatField(
+                    "Energy Cost", shot.EnergyCost);
+
+
+            shot.WeaponDamage = EditorGUILayout.FloatField(
+                    "Weapon Damage", shot.WeaponDamage);
 
             shot.ProjectileMass = EditorGUILayout.Slider(
                     new GUIContent(
@@ -68,8 +73,6 @@ public class ChargedShotEditor : Editor{
                     shot.ProjectileForce,
                     0.1f,
                     1000f);
-
-            ProjectileColor(shot);
 
             EditorGUI.indentLevel--;
         }
