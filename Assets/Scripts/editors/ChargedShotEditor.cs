@@ -31,7 +31,6 @@ public class ChargedShotEditor : Editor{
         PreChargeMenu(shot);
 
         ChargeMenu(shot);
-        EditorGUILayout.LabelField("Charging", shot.Charging.ToString());
 
         HomingMenu(shot);
 
@@ -122,6 +121,8 @@ public class ChargedShotEditor : Editor{
                     shot.ChargeForce,
                     0,
                     1000);
+
+            EditorGUILayout.LabelField("Charging", shot.Charging.ToString());
 
             EditorGUI.indentLevel--;
         }
