@@ -7,7 +7,7 @@ public class PlayerDelegate : MonoBehaviour{
 
     public float maxEnergy = 100f;
     private float energy;
-    private float energyRegenRate = 10f;
+    public float energyRegenRate = 10f;
 
     private PlayerControl playerControl;
     private PlayerGUI playerGUI;
