@@ -19,6 +19,7 @@ public class ChargedShot : Weapon,
 
     private bool active = true;
 
+    [SerializeField]
     private float weaponDamage = 10f;
 
     private float energyCost = 0.1f;
