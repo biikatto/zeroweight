@@ -45,6 +45,7 @@ public class RapidFire : Weapon,
     [SerializeField]
     private float projectileForce = 1000f;
 
+    private PlayerDelegate pDelegate;
     //-------------------------------------------
     //*********** Functions *********************
     //-------------------------------------------
@@ -62,7 +63,9 @@ public class RapidFire : Weapon,
             projectilePrefab = Resources.Load(
             "Prefabs/Bullet_Yellow") as GameObject;
         }
+        pDelegate = gameObject.GetComponentsInParent<PlayerDelegate>()[0];
     }
+
 
     //----------- Firing functions --------------
 
@@ -80,6 +83,7 @@ public class RapidFire : Weapon,
 
     // Fire a single shot
     private void FireShot(){
+        pDelegate.PlaySound();
         GameObject projectile = Instantiate(
                 projectilePrefab,
                 transform.position,

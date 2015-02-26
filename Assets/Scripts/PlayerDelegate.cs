@@ -19,6 +19,8 @@ public class PlayerDelegate : MonoBehaviour{
 
     private Shield shield;
 
+    private SoundManager soundManager;
+
     private ScoreKeeper score;
 
     private bool destroyed = false;
@@ -33,6 +35,8 @@ public class PlayerDelegate : MonoBehaviour{
         
         shield = gameObject.AddComponent("Shield") as Shield;
         shield.PDelegate = this;
+
+        soundManager = gameObject.GetComponentInChildren<SoundManager>();
 
         foreach(Weapon weapon in gameObject.GetComponentsInChildren(typeof(IWeapon))){
             if(weapon.gameObject.name == "Left laser"){
@@ -126,7 +130,7 @@ public class PlayerDelegate : MonoBehaviour{
         rightWeapon.EndFire();
     }
 
-    // s
+    // Shield
     public void BeginShieldLeft(){
         shield.BeginShieldLeft();
     }
@@ -163,5 +167,10 @@ public class PlayerDelegate : MonoBehaviour{
 
     public void HitMessage(){
         playerGUI.HitMessage();
+    }
+
+    // Sound
+    public void PlaySound(){
+        soundManager.PlaySound();
     }
 }
