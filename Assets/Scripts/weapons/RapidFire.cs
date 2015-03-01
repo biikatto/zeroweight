@@ -83,7 +83,7 @@ public class RapidFire : Weapon,
 
     // Fire a single shot
     private void FireShot(){
-        pDelegate.PlaySound();
+    	soundManager.PlayLaserSound();
         GameObject projectile = Instantiate(
                 projectilePrefab,
                 transform.position,
@@ -179,7 +179,6 @@ public class RapidFire : Weapon,
             return projectileColor;
         }
         set{
-            Debug.Log(projectileColor);
             projectileColor = value;
             if(projectileColor == "Blue"){
                 projectilePrefab = Resources.Load(

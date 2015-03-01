@@ -20,12 +20,10 @@ public class PlayerHealth : MonoBehaviour {
 			}
 			destroyed = true;
 		}
-		//Debug.Log(hp + " HP left");
 		gameObject.GetComponent<PlayerDelegate>().HPMeter(hp/maxHP);
 	}
 
 	public void Destruct(){
-		Debug.Log("Player destroyed!");
 		gameObject.GetComponent<PlayerDelegate>().Destruct();
 	}
 }

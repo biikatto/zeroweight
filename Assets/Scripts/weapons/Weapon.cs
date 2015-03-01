@@ -1,6 +1,8 @@
 using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour, IWeapon {
+	public SoundManager soundManager;
+
     public abstract float WeaponDamage{
         get;
         set;

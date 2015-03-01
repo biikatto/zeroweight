@@ -47,7 +47,6 @@ public class PlayerControl : MonoBehaviour
     		if(player2){
     			inputList[key] = inputList[key] + " 2";
     		}
-    		Debug.Log(inputList[key]);
     	}
     }
 
@@ -94,7 +93,6 @@ public class PlayerControl : MonoBehaviour
 
     	    //---------------- Pause ----------------------------------
 			if(Input.GetButtonDown((string)inputList["Pause"])){
-				Debug.Log(!player2);
 				playerDelegate.Pause(!player2);
 			}
 			

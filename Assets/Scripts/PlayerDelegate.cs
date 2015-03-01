@@ -19,15 +19,18 @@ public class PlayerDelegate : MonoBehaviour{
 
     private Shield shield;
 
-    private SoundManager soundManager;
+    public SoundManager soundManager;
 
     private ScoreKeeper score;
 
     private bool destroyed = false;
 
     void Start(){
+        soundManager = gameObject.GetComponentInChildren<SoundManager>();
+
         energy = maxEnergy;
         score = FindObjectOfType(typeof(ScoreKeeper)) as ScoreKeeper;
+
         playerControl = gameObject.GetComponentInChildren<PlayerControl>();
         playerGUI = gameObject.GetComponentInChildren<PlayerGUI>();
         playerHealth = gameObject.GetComponentInChildren<PlayerHealth>();
@@ -36,13 +39,14 @@ public class PlayerDelegate : MonoBehaviour{
         shield = gameObject.AddComponent("Shield") as Shield;
         shield.PDelegate = this;
 
-        soundManager = gameObject.GetComponentInChildren<SoundManager>();
 
         foreach(Weapon weapon in gameObject.GetComponentsInChildren(typeof(IWeapon))){
             if(weapon.gameObject.name == "Left laser"){
                 leftWeapon = weapon;
+                leftWeapon.soundManager = soundManager;
             }else if(weapon.gameObject.name == "Right laser"){
                 rightWeapon = weapon;
+                rightWeapon.soundManager = soundManager;
             }
         }
         StartCoroutine("RegenerateEnergy");
@@ -63,7 +67,6 @@ public class PlayerDelegate : MonoBehaviour{
         while(true){
             energy += Time.deltaTime * energyRegenRate;
             energy = Mathf.Min(maxEnergy, energy);
-            Debug.Log(energy);
             yield return null;
         }
     }
@@ -167,10 +170,5 @@ public class PlayerDelegate : MonoBehaviour{
 
     public void HitMessage(){
         playerGUI.HitMessage();
-    }
-
-    // Sound
-    public void PlaySound(){
-        soundManager.PlaySound();
     }
 }

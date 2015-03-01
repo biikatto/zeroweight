@@ -76,7 +76,6 @@ public class ChargedShot : Weapon,
             projectilePrefab = Resources.Load(
             "Prefabs/Bullet_Yellow") as GameObject;
         }
-
         pDelegate = gameObject.GetComponentsInParent<PlayerDelegate>()[0];
     }
 
@@ -85,12 +84,14 @@ public class ChargedShot : Weapon,
         if((active)&&(cooldownReady == true)){
             charging = true;
             chargeBeginTime = Time.time;
+            soundManager.PlayChargeSound();
         }
     }
 
     public override void EndFire(){
         if((active)&&(charging)){
-            pDelegate.PlaySound();
+            soundManager.StopChargeSound();
+            soundManager.PlayLaserSound();
             float chargeTime = Time.time - chargeBeginTime;
             chargeTime = Math.Min(chargeTime, maxChargeTime);
 
