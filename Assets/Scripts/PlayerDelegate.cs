@@ -41,10 +41,10 @@ public class PlayerDelegate : MonoBehaviour{
 
 
         foreach(Weapon weapon in gameObject.GetComponentsInChildren(typeof(IWeapon))){
-            if(weapon.gameObject.name == "Left laser"){
+            if(weapon.gameObject.name == "Left weapon"){
                 leftWeapon = weapon;
                 leftWeapon.soundManager = soundManager;
-            }else if(weapon.gameObject.name == "Right laser"){
+            }else if(weapon.gameObject.name == "Right weapon"){
                 rightWeapon = weapon;
                 rightWeapon.soundManager = soundManager;
             }
