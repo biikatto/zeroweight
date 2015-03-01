@@ -171,4 +171,8 @@ public class PlayerDelegate : MonoBehaviour{
     public void HitMessage(){
         playerGUI.HitMessage();
     }
+
+    public void Impact(float intensity){
+    	soundManager.PlayImpactSound(intensity);
+    }
 }

@@ -27,16 +27,16 @@ public class SoundManager : MonoBehaviour{
     // Impact
     public void PlayImpactSound(int idx, float volumeScale){
         if(impact.Length > idx){
-    		PlaySound(impact[idx]);
+    		PlaySound(impact[idx], impactSource);
     	}
     }
 
     public void PlayImpactSound(float volumeScale){
-    	PlayRandomSound(impact, volumeScale);
+    	PlayRandomSound(impact, volumeScale, impactSource);
     }
 
     public void PlayImpactSound(){
-    	PlayRandomSound(impact);
+    	PlayRandomSound(impact, impactSource);
     }
 
     // Laser

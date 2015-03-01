@@ -28,6 +28,8 @@ public class KineticProjectile : MonoBehaviour{
 		    print("Hit player");
 		    // Apply damage
 			contact.otherCollider.gameObject.GetComponent<PlayerDelegate>().AddDamage(kineticDamage);
+			// Trigger impact fx
+			contact.otherCollider.gameObject.GetComponent<PlayerDelegate>().Impact(1.0f);
 		    // Activate hit message on opponent
 			origin.GetComponent<PlayerDelegate>().HitMessage();
 		}else if(contact.otherCollider.gameObject.tag == "Shield"){
