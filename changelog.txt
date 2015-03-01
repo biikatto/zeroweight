@@ -1,3 +1,9 @@
+0.1.6 (alpha)
+
+-Implemented sounds:
+-Weapon (charge & fire)
+-Impact
+
 0.1.5 (alpha)
 
 -Fixed weapon damage not being properly editable
