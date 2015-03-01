@@ -97,7 +97,7 @@ public class ChargedShot : Weapon,
 
             float chargeLevel = 0f;
             if(chargeTime > 0){
-                chargeLevel = chargeTime/maxChargeTime;
+                chargeLevel = Mathf.Min(chargeTime/maxChargeTime);
             }
 
             GameObject projectile = Instantiate(
@@ -107,7 +107,7 @@ public class ChargedShot : Weapon,
             projectile.rigidbody.mass = projectileMass + (chargeMass * chargeLevel);
             projectile.transform.localScale = Vector3.one * (projectileSize + (chargeSize * chargeLevel));
             projectile.transform.Translate(Vector3.forward * projectile.transform.localScale.x * 4);
-            projectile.GetComponent<KineticProjectile>().kineticDamage = weaponDamage;
+            projectile.GetComponent<KineticProjectile>().kineticDamage = weaponDamage + (chargeDamage * chargeLevel);
             projectile.GetComponent<KineticProjectile>().Origin = transform.parent.parent.gameObject;
             projectile.GetComponent<KineticProjectile>().homingForce = projectileHomingForce;
             projectile.GetComponent<KineticProjectile>().homingRadius = projectileHomingRadius;
