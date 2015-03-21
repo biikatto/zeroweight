@@ -67,7 +67,7 @@ public class Thrust : MonoBehaviour {
 
 	private void Boost(Vector3 thrust){
 		if(pDelegate.UseEnergy(boostEnergyCost)){
-			rigidbody.AddRelativeForce(thrust);
+			GetComponent<Rigidbody>().AddRelativeForce(thrust);
 		}
 	}
 
@@ -126,9 +126,9 @@ public class Thrust : MonoBehaviour {
 		adjustThrust(Input.GetAxis("Mouse ScrollWheel"));
 		//manageBoost();
 		if(disruptTime <= 0f){
-			rigidbody.AddRelativeForce(Vector3.right * (xThrust * xThrustPower * thrustPower /* * (1f + boostPower * boostThrust)*/) * Time.deltaTime);
-			rigidbody.AddRelativeForce(Vector3.up * (yThrust * yThrustPower * thrustPower /* * (1f + boostPower * boostThrust)*/) * Time.deltaTime);
-			rigidbody.AddRelativeForce(Vector3.forward * (zThrust * zThrustPower * thrustPower /* * (1f + boostPower * boostThrust)*/) * Time.deltaTime);
+			GetComponent<Rigidbody>().AddRelativeForce(Vector3.right * (xThrust * xThrustPower * thrustPower /* * (1f + boostPower * boostThrust)*/) * Time.deltaTime);
+			GetComponent<Rigidbody>().AddRelativeForce(Vector3.up * (yThrust * yThrustPower * thrustPower /* * (1f + boostPower * boostThrust)*/) * Time.deltaTime);
+			GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * (zThrust * zThrustPower * thrustPower /* * (1f + boostPower * boostThrust)*/) * Time.deltaTime);
 		}else{
 			disruptTime -= Time.deltaTime;
 			if(disruptTime < 0f){
@@ -137,7 +137,7 @@ public class Thrust : MonoBehaviour {
 		}
 		if(Time.frameCount%3 == 0){
 			//Debug.Log(rigidbody.velocity.magnitude/110f);
-			transform.GetComponent<PlayerDelegate>().VelocityMeter(rigidbody.velocity.magnitude/110f);
+			transform.GetComponent<PlayerDelegate>().VelocityMeter(GetComponent<Rigidbody>().velocity.magnitude/110f);
 		}
 	}
 

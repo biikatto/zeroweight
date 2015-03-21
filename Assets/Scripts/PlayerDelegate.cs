@@ -36,7 +36,7 @@ public class PlayerDelegate : MonoBehaviour{
         playerHealth = gameObject.GetComponentInChildren<PlayerHealth>();
         thrust = gameObject.GetComponentInChildren<Thrust>();
         
-        shield = gameObject.AddComponent("Shield") as Shield;
+        shield = gameObject.AddComponent<Shield>() as Shield;
         shield.PDelegate = this;
 
 

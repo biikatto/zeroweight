@@ -37,7 +37,7 @@ public class Target : MonoBehaviour{
 		if(!destroyed){
 			foreach(Transform child in transform){
 				//child.rigidbody.isKinematic = false;
-				child.rigidbody.AddExplosionForce(
+				child.GetComponent<Rigidbody>().AddExplosionForce(
 						explosionForce,
 						explosionPos,
 						20f);

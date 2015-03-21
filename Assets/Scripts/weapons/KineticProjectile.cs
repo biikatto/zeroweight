@@ -45,15 +45,15 @@ public class KineticProjectile : MonoBehaviour{
 		GameObject opponent = FindOpponent();
 		if(opponent != null){
 			Vector3 distanceVector = (opponent.transform.position-transform.position);
-			rigidbody.AddForce(
-					distanceVector * 1f/distanceVector.magnitude * homingForce * rigidbody.mass);
+			GetComponent<Rigidbody>().AddForce(
+					distanceVector * 1f/distanceVector.magnitude * homingForce * GetComponent<Rigidbody>().mass);
 		}
 	}
 
     // Check if a GameObject is visible to this camera
 	bool IsVisible(Camera cam, GameObject target){
 		Plane[] planes = GeometryUtility.CalculateFrustumPlanes(cam);
-		return GeometryUtility.TestPlanesAABB(planes, target.collider.bounds);
+		return GeometryUtility.TestPlanesAABB(planes, target.GetComponent<Collider>().bounds);
 	}
 
     // Return GameObject corresponding to opponent in view
@@ -62,7 +62,7 @@ public class KineticProjectile : MonoBehaviour{
 		foreach(GameObject ship in GameObject.FindGameObjectsWithTag("Player")){
 			// Don't home in on the ship that fired this
 			if(ship != origin){
-				if(IsVisible(gameObject.camera, ship)){
+				if(IsVisible(gameObject.GetComponent<Camera>(), ship)){
 					// Initialize targetShip
 					if(targetShip == null){
 						targetShip = ship;

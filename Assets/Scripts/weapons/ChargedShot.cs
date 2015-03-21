@@ -104,7 +104,7 @@ public class ChargedShot : Weapon,
                     projectilePrefab,
                     transform.position,
                     transform.rotation) as GameObject;
-            projectile.rigidbody.mass = projectileMass + (chargeMass * chargeLevel);
+            projectile.GetComponent<Rigidbody>().mass = projectileMass + (chargeMass * chargeLevel);
             projectile.transform.localScale = Vector3.one * (projectileSize + (chargeSize * chargeLevel));
             projectile.transform.Translate(Vector3.forward * projectile.transform.localScale.x * 4);
             projectile.GetComponent<KineticProjectile>().kineticDamage = weaponDamage + (chargeDamage * chargeLevel);
@@ -112,8 +112,8 @@ public class ChargedShot : Weapon,
             projectile.GetComponent<KineticProjectile>().homingForce = projectileHomingForce;
             projectile.GetComponent<KineticProjectile>().homingRadius = projectileHomingRadius;
 
-            projectile.rigidbody.AddRelativeForce(
-                transform.parent.parent.rigidbody.velocity + (
+            projectile.GetComponent<Rigidbody>().AddRelativeForce(
+                transform.parent.parent.GetComponent<Rigidbody>().velocity + (
                     Vector3.forward * 10 * projectileMass * projectileForce));
             charging = false;
             BeginCooldown();

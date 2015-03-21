@@ -37,7 +37,7 @@ public class Laser : MonoBehaviour {
 				//activeBeam.transform.parent = transform;
 
 				GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation) as GameObject;
-				projectile.rigidbody.AddRelativeForce(Vector3.forward * 10 * projectileForce);
+				projectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * 10 * projectileForce);
 
 				activeTime += weaponTime;
 				cooldown += cooldownTime;

@@ -42,7 +42,7 @@ public class OldWeapon : MonoBehaviour {
 					projectilePrefab,
 					transform.position,
 					transform.rotation) as GameObject;
-			projectile.rigidbody.mass = projectileMass;
+			projectile.GetComponent<Rigidbody>().mass = projectileMass;
 			projectile.transform.localScale = Vector3.one * projectileSize;
 			projectile.transform.Translate(Vector3.forward * projectileSize);
 			projectile.GetComponent<KineticProjectile>().kineticDamage = weaponDamage;
@@ -50,8 +50,8 @@ public class OldWeapon : MonoBehaviour {
 			projectile.GetComponent<KineticProjectile>().homingForce = projectileHomingForce;
 			projectile.GetComponent<KineticProjectile>().homingRadius = projectileHomingRadius;
 
-			projectile.rigidbody.AddRelativeForce(
-				transform.parent.parent.rigidbody.velocity + (
+			projectile.GetComponent<Rigidbody>().AddRelativeForce(
+				transform.parent.parent.GetComponent<Rigidbody>().velocity + (
 					Vector3.forward * 10 * projectileMass * projectileForce));
 
 			cooldown += cooldownTime;
