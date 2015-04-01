@@ -9,6 +9,9 @@ public class KineticProjectile : MonoBehaviour{
 	// Who fired the weapon?
 	private GameObject origin;
 
+	private AudioSource source;
+	public AudioClip impactSound;
+
 	void FixedUpdate(){
 		SeekOpponent();
 	}
@@ -18,7 +21,9 @@ public class KineticProjectile : MonoBehaviour{
 	    set{ origin = value; }
 	}
 
-	void Start(){}
+	void Start(){
+    	source = gameObject.AddComponent<AudioSource>();
+	}
 
 	void OnCollisionEnter(Collision collision){
 		ExplosionEffect();
@@ -36,6 +41,7 @@ public class KineticProjectile : MonoBehaviour{
 		    print("Hit shield");
 		    contact.otherCollider.gameObject.transform.parent.GetComponent<Shield>().Impact(kineticDamage);
 		}
+		source.PlayOneShot(impactSound);
 		Destroy(gameObject);
 	}
 

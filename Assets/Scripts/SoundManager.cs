@@ -42,31 +42,31 @@ public class SoundManager : MonoBehaviour{
     // Laser
     public void PlayLaserSound(int idx, float volumeScale){
         if(laser.Length > idx){
-    		PlaySound(laser[idx]);
+    		PlaySound(laser[idx], laserSource);
     	}
     }
 
     public void PlayLaserSound(float volumeScale){
-    	PlayRandomSound(laser, volumeScale);
+    	PlayRandomSound(laser, volumeScale, laserSource);
     }
 
     public void PlayLaserSound(){
-    	PlayRandomSound(laser);
+    	PlayRandomSound(laser, laserSource);
     }
 
     // Low health
     public void PlayLowHealthSound(int idx, float volumeScale){
         if(lowHealth.Length > idx){
-    		PlaySound(lowHealth[idx]);
+    		PlaySound(lowHealth[idx], lowHealthSource);
     	}
     }
 
     public void PlayLowHealthSound(float volumeScale){
-    	PlayRandomSound(lowHealth, volumeScale);
+    	PlayRandomSound(lowHealth, volumeScale, lowHealthSource);
     }
 
     public void PlayLowHealthSound(){
-    	PlayRandomSound(lowHealth);
+    	PlayRandomSound(lowHealth, lowHealthSource);
     }
 
     // Charge
