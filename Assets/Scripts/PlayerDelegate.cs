@@ -23,7 +23,7 @@ public class PlayerDelegate : MonoBehaviour{
 
     private ScoreKeeper score;
 
-    private bool destroyed = false;
+    //private bool destroyed = false;
 
     void Start(){
         soundManager = gameObject.GetComponentInChildren<SoundManager>();

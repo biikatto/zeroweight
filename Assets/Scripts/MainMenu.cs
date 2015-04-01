@@ -2,8 +2,9 @@ using UnityEngine;
 using System.Collections;
 
 public class MainMenu : MonoBehaviour{
-    void Start(){
-        Screen.lockCursor = true;
+    public void Start(){
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void LoadGame(){

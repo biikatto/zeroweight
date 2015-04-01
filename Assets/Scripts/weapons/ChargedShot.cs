@@ -57,7 +57,7 @@ public class ChargedShot : Weapon,
     [SerializeField]
     private float projectileForce = 1000f;
 
-    private PlayerDelegate pDelegate;
+    //private PlayerDelegate pDelegate;
 
     //-------------------------------------------
     //*********** Functions *********************
@@ -76,7 +76,7 @@ public class ChargedShot : Weapon,
             projectilePrefab = Resources.Load(
             "Prefabs/Bullet_Yellow") as GameObject;
         }
-        pDelegate = gameObject.GetComponentsInParent<PlayerDelegate>()[0];
+        //pDelegate = gameObject.GetComponentsInParent<PlayerDelegate>()[0];
     }
 
     //----------- Firing functions --------------

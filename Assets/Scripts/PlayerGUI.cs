@@ -16,7 +16,7 @@ public class PlayerGUI : MonoBehaviour{
 	private Rect playerScreen;
 	private Vector2 midScreen;
 
-	private GUISkin skin;
+	//private GUISkin skin;
 
 	private Texture2D[] velocityBarTextures;
 	private Texture2D[] boostBarTextures;
@@ -26,7 +26,7 @@ public class PlayerGUI : MonoBehaviour{
 
 	private float velocity;
 	public Vector2 velocityBarPosition;
-	/*public*/ private bool verticalVelocityBar;
+	///*public*/ private bool verticalVelocityBar;
 	public int velocitySegmentOffset;
 	public Vector2 velocityBarSize = new Vector2(64, 16);
 	private Rect[] velocityBarRect;
@@ -34,7 +34,7 @@ public class PlayerGUI : MonoBehaviour{
 	
 	private float boostEnergy = 1f;
 	public Vector2 boostBarPosition;
-	/*public*/ private bool verticalBoostBar;
+	///*public*/ private bool verticalBoostBar;
 	public int boostSegmentOffset = 28;
 	public Vector2 boostBarSize = new Vector2(64, 16);
 	private Rect[] boostBarRect;
@@ -83,7 +83,7 @@ public class PlayerGUI : MonoBehaviour{
 			playerScreen.yMax - hpBarSize.y - 10);
 
 
-		skin = Resources.Load<GUISkin>("defaultGUI");
+		//skin = Resources.Load<GUISkin>("defaultGUI");
 		
 		string crosshairPath = "UI/Crosshairs/" + crosshairNumber + "-1";
 		string crosshairHilitePath = "UI/Crosshairs/" + crosshairNumber + "-2";
@@ -102,11 +102,11 @@ public class PlayerGUI : MonoBehaviour{
 			string filename = "UI/Accel" + (i + 1);
 			velocityBarTextures[i] = Resources.Load<Texture2D>(filename);
 			velocitySegPos[i] = velocityBarPosition;
-			if(verticalVelocityBar){
-				velocitySegPos[i].y += velocitySegmentOffset * i;
-			}else{
-				velocitySegPos[i].x += velocitySegmentOffset * i;
-			}
+			//if(/*verticalVelocityBar*/ false){
+			//	//velocitySegPos[i].y += velocitySegmentOffset * i;
+			//}else{
+			velocitySegPos[i].x += velocitySegmentOffset * i;
+			//}
 			velocityBarRect[i] = new Rect(
 					velocitySegPos[i].x,
 					velocitySegPos[i].y,
@@ -121,11 +121,11 @@ public class PlayerGUI : MonoBehaviour{
 			string filename = "UI/Cooldown" + (i + 1);
 			boostBarTextures[i] = Resources.Load<Texture2D>(filename);
 			boostSegPos[i] = boostBarPosition;
-			if(verticalBoostBar){
-				boostSegPos[i].y += boostSegmentOffset * i;
-			}else{
+			//if(/*verticalBoostBar*/ false){
+			//	//boostSegPos[i].y += boostSegmentOffset * i;
+			//}else{
 				boostSegPos[i].x += boostSegmentOffset * i;
-			}
+			//}
 			boostBarRect[i] = new Rect(
 					boostSegPos[i].x,
 					boostSegPos[i].y,

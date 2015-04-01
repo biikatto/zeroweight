@@ -2,8 +2,7 @@
 using System.Collections;
  
 [AddComponentMenu("Camera/PlayerControl")]
-public class PlayerControl : MonoBehaviour
-{
+public class PlayerControl : MonoBehaviour{
 	PlayerDelegate playerDelegate;
 
     Vector2 _smoothMouse;
@@ -98,6 +97,7 @@ public class PlayerControl : MonoBehaviour
 			
     	    //---------------- Boost ----------------------------------
 			if(Input.GetButtonDown((string)inputList["Boost left"])){
+				Debug.Log("Boost input");
 				playerDelegate.BoostLeft();
 			}
 
@@ -123,7 +123,10 @@ public class PlayerControl : MonoBehaviour
     	if(!destroyed){
 
         	// Ensure the cursor is always locked when set
-        	Screen.lockCursor = lockCursor;
+        	if(lockCursor){
+        		Cursor.lockState = CursorLockMode.Locked;
+        		Cursor.visible = false;
+        	}
  	 
         	// Get raw mouse input for a cleaner reading on more sensitive mice.
         	Vector2 mouseDelta = new Vector2(Input.GetAxisRaw((string)inputList["Mouse X"]), Input.GetAxisRaw((string)inputList["Mouse Y"]));

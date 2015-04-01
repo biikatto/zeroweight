@@ -36,27 +36,27 @@ public class Shield : MonoBehaviour {
     }
 
     public void BeginShieldLeft(){
-        if(!leftShield.active){
+        if(!leftShield.activeSelf){
             leftShield.SetActive(true);
             StartCoroutine("EnergyUpkeep");
         }
     }
 
     public void EndShieldLeft(){
-        if(leftShield.active){
+        if(leftShield.activeSelf){
             leftShield.SetActive(false);
         }
     }
 
     public void BeginShieldRight(){
-        if(!rightShield.active){
+        if(!rightShield.activeSelf){
             rightShield.SetActive(true);
             StartCoroutine("EnergyUpkeep");
         }
     }
 
     public void EndShieldRight(){
-        if(rightShield.active){
+        if(rightShield.activeSelf){
             rightShield.SetActive(false);
         }
     }
@@ -85,7 +85,7 @@ public class Shield : MonoBehaviour {
             upkeepActive = true;
             while(upkeepActive){
                 // Both shields active
-                if(leftShield.active && rightShield.active){
+                if(leftShield.activeSelf && rightShield.activeSelf){
                     if(!pDelegate.UseEnergy(Time.deltaTime * energyCost * 2)){
                         leftShield.SetActive(false);
                         rightShield.SetActive(false);
@@ -93,13 +93,13 @@ public class Shield : MonoBehaviour {
                     }
                 }else{
                     // One shield active
-                    if(leftShield.active){
+                    if(leftShield.activeSelf){
                         if(!pDelegate.UseEnergy(Time.deltaTime * energyCost)){
                             Debug.Log("Insufficient energy, deactivating left shield");
                             leftShield.SetActive(false);
                             upkeepActive = false;
                         }
-                    }else if(rightShield.active){
+                    }else if(rightShield.activeSelf){
                         if(!pDelegate.UseEnergy(Time.deltaTime * energyCost)){
                             Debug.Log("Insufficient energy, deactivating right shield");
                             rightShield.SetActive(false);
