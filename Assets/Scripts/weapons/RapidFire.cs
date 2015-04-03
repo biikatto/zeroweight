@@ -45,6 +45,8 @@ public class RapidFire : Weapon,
     private float projectileSize = 0.5f;
     [SerializeField]
     private float projectileForce = 1000f;
+    [SerializeField]
+    private float projectileRange = 100f;
 
     //private PlayerDelegate pDelegate;
     //-------------------------------------------
@@ -217,6 +219,16 @@ public class RapidFire : Weapon,
         }
         set{
             projectileHomingRadius = Math.Max(value, 0);
+        }
+    }
+
+    // Minimum value is 0.
+    public float ProjectileRange{
+        get{
+            return projectileRange;
+        }
+        set{
+            projectileRange = Math.Max(value, 0);
         }
     }
 

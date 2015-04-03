@@ -36,6 +36,8 @@ public class RapidFireEditor : Editor{
         ProjectileMenu(rapid);
 
         ProjectileColor(rapid);
+
+        ProjectileRange(rapid);
     }
 
     private void ProjectileMenu(RapidFire rapid){
@@ -96,5 +98,15 @@ public class RapidFireEditor : Editor{
     private void ProjectileColor(RapidFire rapid){
         rapid.ProjectileColor = colors[EditorGUILayout.Popup(
                 "Projectile Color", colorDict[rapid.ProjectileColor], colors)];
+    }
+
+    private void ProjectileRange(RapidFire rapid){
+    	rapid.ProjectileRange = EditorGUILayout.Slider(
+    		new GUIContent(
+    			"Projectile Range",
+    			"Maximum range of the projectile."),
+    		rapid.ProjectileRange,
+    		20f,
+    		500f);
     }
 }

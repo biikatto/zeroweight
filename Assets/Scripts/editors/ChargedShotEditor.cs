@@ -35,6 +35,8 @@ public class ChargedShotEditor : Editor{
         HomingMenu(shot);
 
         ProjectileColor(shot);
+
+        ProjectileRange(shot);
     }
 
     private void PreChargeMenu(ChargedShot shot){
@@ -153,5 +155,15 @@ public class ChargedShotEditor : Editor{
     private void ProjectileColor(ChargedShot shot){
         shot.ProjectileColor = colors[EditorGUILayout.Popup(
                 "Projectile Color", colorDict[shot.ProjectileColor], colors)];
+    }
+
+    private void ProjectileRange(ChargedShot shot){
+    	shot.ProjectileRange = EditorGUILayout.Slider(
+    		new GUIContent(
+    			"Projectile Range",
+    			"Maximum range of the projectile."),
+    		shot.ProjectileRange,
+    		20f,
+    		500f);
     }
 }

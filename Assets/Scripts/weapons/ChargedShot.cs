@@ -56,6 +56,8 @@ public class ChargedShot : Weapon,
     private float projectileSize = 0.5f;
     [SerializeField]
     private float projectileForce = 1000f;
+    [SerializeField]
+    private float projectileRange = 100f;
 
     //private PlayerDelegate pDelegate;
 
@@ -107,10 +109,13 @@ public class ChargedShot : Weapon,
             projectile.GetComponent<Rigidbody>().mass = projectileMass + (chargeMass * chargeLevel);
             projectile.transform.localScale = Vector3.one * (projectileSize + (chargeSize * chargeLevel));
             projectile.transform.Translate(Vector3.forward * projectile.transform.localScale.x * 4);
+
+            // Set projectile fields
             projectile.GetComponent<KineticProjectile>().kineticDamage = weaponDamage + (chargeDamage * chargeLevel);
             projectile.GetComponent<KineticProjectile>().Origin = transform.parent.parent.gameObject;
             projectile.GetComponent<KineticProjectile>().homingForce = projectileHomingForce;
             projectile.GetComponent<KineticProjectile>().homingRadius = projectileHomingRadius;
+            projectile.GetComponent<KineticProjectile>().range = projectileRange;
 
             projectile.GetComponent<Rigidbody>().AddRelativeForce(
                 transform.parent.parent.GetComponent<Rigidbody>().velocity + (
@@ -268,6 +273,16 @@ public class ChargedShot : Weapon,
         set{
             projectileHomingRadius = Math.Max(value, 0);
         }
+    }
+
+    // Minimum value is 0.
+    public float ProjectileRange{
+    	get{
+    		return projectileRange;
+    	}
+    	set{
+    		projectileRange = Math.Max(value, 0);
+    	}
     }
 
     // Minimum value is 0.

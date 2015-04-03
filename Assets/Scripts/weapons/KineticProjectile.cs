@@ -5,6 +5,7 @@ public class KineticProjectile : MonoBehaviour{
 	public float kineticDamage = 15f;
 	public float homingForce = 1000f;
 	public float homingRadius = 1000f;
+	public float range = 100f;
 
 	// Who fired the weapon?
 	private GameObject origin;
@@ -14,6 +15,9 @@ public class KineticProjectile : MonoBehaviour{
 
 	void FixedUpdate(){
 		SeekOpponent();
+		if((transform.position - origin.transform.position).sqrMagnitude > range*range){
+			Destroy(gameObject);
+		}
 	}
 
 	public GameObject Origin{
