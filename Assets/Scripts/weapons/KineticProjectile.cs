@@ -75,6 +75,8 @@ public class KineticProjectile : MonoBehaviour{
 		source.PlayOneShot(impactSound);
 		if(returns){
 			returning = true;
+		}else{
+			Destroy(gameObject);
 		}
 	}
 
