@@ -64,7 +64,7 @@ public class ChargedShot : Weapon,
     //-------------------------------------------
     //*********** Functions *********************
     //-------------------------------------------
-    void Start(){
+    public void Start(){
         if(projectileColor == "Blue"){
             projectilePrefab = Resources.Load(
             "Prefabs/Bullet_Blue") as GameObject;
