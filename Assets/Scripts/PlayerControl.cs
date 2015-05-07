@@ -25,6 +25,7 @@ public class PlayerControl : MonoBehaviour{
 
     private string controllerName;
     private bool isXboxController;
+    private bool isPs4Controller;
     private int joystickNumber;
 
     public float dpadThreshold;
@@ -68,9 +69,15 @@ public class PlayerControl : MonoBehaviour{
     	}
     	if(controllerName == "Controller (Xbox 360 Wireless Receiver for Windows)"){
     		isXboxController = true;
+    		isPs4Controller = false;
     		Debug.Log("Xbox controller");
+    	}else if(controllerName == "Ps4 controller name"){
+    		isXboxController = false;
+    		isPs4Controller = true;
+    		Debug.Log("Ps4 controller");
     	}else{
     		isXboxController = false;
+    		isPs4Controller = false;
     		Debug.Log("Some other controller");
     	}
     	if(player2){
@@ -87,6 +94,97 @@ public class PlayerControl : MonoBehaviour{
 
     	boosting = false;
     }
+
+    private void Ps4Update(){
+    	//---------------- Weapons ----------------------------------
+    	if(Input.GetAxis("Ps4 "+joystickNumber+" l2") > fireThreshold){
+    		if(!leftWeaponFiring){
+				playerDelegate.BeginFireLeftWeapon();
+				leftWeaponFiring = true;
+			}
+		}
+    	if(Input.GetAxis("Ps4 "+joystickNumber+" l2") < fireThreshold){
+    		if(leftWeaponFiring){
+				playerDelegate.EndFireLeftWeapon();
+				leftWeaponFiring = false;
+			}
+		}
+    	if(Input.GetAxis("Ps4 "+joystickNumber+" r2") > fireThreshold){
+    		if(!rightWeaponFiring){
+				playerDelegate.BeginFireRightWeapon();
+				rightWeaponFiring = true;
+			}
+		}
+    	if(Input.GetAxis("Ps4 "+joystickNumber+" r2") < fireThreshold){
+    		if(rightWeaponFiring){
+				playerDelegate.EndFireRightWeapon();
+				rightWeaponFiring = false;
+			}
+		}
+
+    	//---------------- Shields ----------------------------------
+    	if(Input.GetButtonDown("Ps4 "+joystickNumber+" l1")){
+			playerDelegate.BeginShieldLeft();
+		}
+    	if(Input.GetButtonUp("Ps4 "+joystickNumber+" l1")){
+			playerDelegate.EndShieldLeft();
+		}
+    	if(Input.GetButtonDown("Ps4 "+joystickNumber+" r1")){
+			playerDelegate.BeginShieldRight();
+		}
+    	if(Input.GetButtonUp("Ps4 "+joystickNumber+" r1")){
+			playerDelegate.EndShieldRight();
+		}
+
+    	//---------------- Camera ----------------------------------
+		//if(Input.GetButtonDown((string)inputList["Camera select"])){
+		//	if(firstPerson){
+		//		gameObject.BroadcastMessage("ThirdPerson");
+		//		firstPerson = false;
+		//	}else{
+		//		gameObject.BroadcastMessage("FirstPerson");
+		//		firstPerson = true;
+		//	}
+		//}
+
+    	//---------------- Pause ----------------------------------
+    	if(Input.GetButtonDown("Ps4 "+joystickNumber+" touchpad press")){
+			playerDelegate.Pause(!player2);
+		}
+
+    	//---------------- Boost ----------------------------------
+    	if(!boosting){
+    		if(Input.GetAxis("Ps4 "+joystickNumber+" dpad x") * -1.0f > dpadThreshold){
+				playerDelegate.BoostLeft();
+				boosting = true;
+			}
+
+    		if(Input.GetAxis("Ps4 "+joystickNumber+" dpad x") > dpadThreshold){
+				playerDelegate.BoostRight();
+				boosting = true;
+			}
+
+    		if(Input.GetAxis("Ps4 "+joystickNumber+" dpad y") > dpadThreshold){
+				playerDelegate.BoostUp();
+				boosting = true;
+			}
+
+    		if(Input.GetAxis("Ps4 "+joystickNumber+" dpad y") * -1.0f > dpadThreshold){
+				playerDelegate.BoostDown();
+				boosting = true;
+			}
+		}else{
+    		if(Mathf.Abs(Input.GetAxis("Ps4 "+joystickNumber+" dpad x")) < dpadThreshold){
+    			if(Mathf.Abs(Input.GetAxis("Ps4 "+joystickNumber+" dpad y")) < dpadThreshold){
+    				boosting = false;
+    			}
+    		}
+		}
+
+    	//---------------- Thrust ----------------------------------
+    	playerDelegate.XThrust(Input.GetAxis("Ps4 "+joystickNumber+" left x"));
+    	playerDelegate.ZThrust(Input.GetAxis("Ps4 "+joystickNumber+" left y"));
+	}
 
     private void XboxUpdate(){
     	//---------------- Weapons ----------------------------------
@@ -183,6 +281,8 @@ public class PlayerControl : MonoBehaviour{
     	if(!destroyed){
     		if(isXboxController){
     			XboxUpdate();
+    		}else if(isPs4Controller){
+    			Ps4Update();
     		}else{
     			//---------------- Weapons ----------------------------------
 				if(Input.GetButtonDown((string)inputList["Fire left"])){
