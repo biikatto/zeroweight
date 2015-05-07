@@ -15,6 +15,7 @@ public class ProbeChargedShot : ChargedShot{
 	public bool left;
 
 	private Animator animator;
+	public bool animated;
 
     //-------------------------------------------
     //*********** Functions *********************
@@ -29,20 +30,23 @@ public class ProbeChargedShot : ChargedShot{
 
     	Debug.Log(animator);
     	animator.SetTrigger("Rest");
+    	animated = false;
     	base.Start();
     }
 
     //----------- Firing functions --------------
     public override void EndFire(){
     	base.EndFire();
-    	if(left){
-    		Debug.Log("Left");
-    		animator.SetTrigger("Punch Left");
-    		animator.SetTrigger("Rest");
-    	}else{
-    		Debug.Log("Right");
-    		animator.SetTrigger("Punch Right");
-    		animator.SetTrigger("Rest");
+    	if(animated){
+    		if(left){
+    			Debug.Log("Left");
+    			animator.SetTrigger("Punch Left");
+    			animator.SetTrigger("Rest");
+    		}else{
+    			Debug.Log("Right");
+    			animator.SetTrigger("Punch Right");
+    			animator.SetTrigger("Rest");
+    		}
     	}
     }
 }
